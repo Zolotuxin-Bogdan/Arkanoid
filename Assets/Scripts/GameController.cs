@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     private int _blockCounter;
+
+    public GameObject WinCanvas;
     void Start()
     {
         _blockCounter = GameObject.FindGameObjectsWithTag("Block").Length;
@@ -25,6 +27,6 @@ public class GameController : MonoBehaviour
     void GameFinished()
     {
         Time.timeScale = 0;
-        Debug.Log("LEVEL COMPLETE");
+        WinCanvas.SetActive(true);
     }
 }
