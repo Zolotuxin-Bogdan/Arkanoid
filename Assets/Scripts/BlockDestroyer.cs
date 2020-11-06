@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class BlockDestroyer : MonoBehaviour
 {
-    void OnCollisionEnter2D(Collision2D collisionInfo)
+    public GameController GameController;
+    void OnCollisionEnter2D(Collision2D col)
     {
-        Destroy(gameObject);
+        if (col.gameObject.tag == "Ball")
+        {
+            Destroy(gameObject);
+            GameController.BlockDestroyed();
+        }
     }
 }
