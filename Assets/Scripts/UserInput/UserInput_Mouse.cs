@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class UserInput_Mouse : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Racket Racket;
+
+    void FixedUpdate()
     {
-        
+        Racket.RacketSetPosition(GetMousePosition());
     }
 
-    // Update is called once per frame
-    void Update()
+    Vector3 GetMousePosition()
     {
-        
+        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 }

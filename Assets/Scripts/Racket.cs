@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class Racket : MonoBehaviour
 {
-    private Vector3 _mousePos;
     private float _speed = 50f;
 
-    void FixedUpdate()
+    public void RacketSetPosition(Vector3 mousePos)
     {
-        _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        _mousePos.y = transform.position.y;
-        _mousePos.z = transform.position.z;
-        transform.position = Vector3.MoveTowards(transform.position, _mousePos, _speed * Time.deltaTime);
+        mousePos.y = transform.position.y;
+        mousePos.z = transform.position.z;
+        transform.position = Vector3.MoveTowards(transform.position, mousePos, _speed * Time.deltaTime);
     }
+
 
     /*void FixedUpdate()
     {
