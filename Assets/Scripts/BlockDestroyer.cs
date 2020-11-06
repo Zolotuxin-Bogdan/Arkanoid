@@ -5,12 +5,14 @@ using UnityEngine;
 public class BlockDestroyer : MonoBehaviour
 {
     public GameController GameController;
+    public Score Score;
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Ball")
         {
-            Destroy(gameObject);
+            Score.AddScore();
             GameController.BlockDestroyed();
+            Destroy(gameObject);
         }
     }
 }
