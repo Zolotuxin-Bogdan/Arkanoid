@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class UserInput_Axis : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Racket Racket;
+    void FixedUpdate()
     {
-        
+        Racket.MoveRacketByAxis(GetAxisDirection());
     }
 
-    // Update is called once per frame
-    void Update()
+    float GetAxisDirection()
     {
-        
+        return Input.GetAxisRaw("Horizontal");
     }
 }

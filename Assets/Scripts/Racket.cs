@@ -5,6 +5,12 @@ using UnityEngine;
 public class Racket : MonoBehaviour
 {
     private float _speed = 50f;
+    private Rigidbody2D rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     public void MoveRacketByMouse(Vector3 mousePos)
     {
@@ -13,13 +19,8 @@ public class Racket : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, mousePos, _speed * Time.deltaTime);
     }
 
-
-    /*void FixedUpdate()
+    public void MoveRacketByAxis(float axisDirection)
     {
-        // Get Horizontal Input
-        float h = Input.GetAxisRaw("Horizontal");
-
-        // Set Velocity (movement direction * speed)
-        GetComponent<Rigidbody2D>().velocity = Vector2.right * h * 10f;
-    }*/
+        rb.velocity = Vector2.right * axisDirection * 10f;
+    }
 }
