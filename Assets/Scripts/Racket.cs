@@ -6,7 +6,7 @@ public class Racket : MonoBehaviour
 {
     private float _speed = 50f;
 
-    public void RacketSetPosition(Vector3 mousePos)
+    public void MoveRacketByMouse(Vector3 mousePos)
     {
         mousePos.y = transform.position.y;
         mousePos.z = transform.position.z;

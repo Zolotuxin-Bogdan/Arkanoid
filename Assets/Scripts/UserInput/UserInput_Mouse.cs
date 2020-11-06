@@ -8,7 +8,7 @@ public class UserInput_Mouse : MonoBehaviour
 
     void FixedUpdate()
     {
-        Racket.RacketSetPosition(GetMousePosition());
+        Racket.MoveRacketByMouse(GetMousePosition());
     }
 
     Vector3 GetMousePosition()
