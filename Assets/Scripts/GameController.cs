@@ -17,6 +17,11 @@ public class GameController : MonoBehaviour
         {
             GameFinished();
         }
+
+        if (Input.GetKeyDown("x"))
+        {
+            DestroyAllBlocks();
+        }
     }
 
     public void BlockDestroyed()
@@ -28,5 +33,16 @@ public class GameController : MonoBehaviour
     {
         Time.timeScale = 0;
         WinCanvas.SetActive(true);
+    }
+
+    void DestroyAllBlocks()
+    {
+        var blocks = GameObject.FindGameObjectsWithTag("Block");
+        foreach (var block in blocks)
+        {
+            Destroy(block);
+        }
+
+        _blockCounter = 0;
     }
 }
