@@ -7,6 +7,9 @@ public class GameController : MonoBehaviour
     private int _blockCounter;
 
     public GameObject WinCanvas;
+    public GameObject LoseCanvas;
+
+    public LoseGame LoseGame;
     void Start()
     {
         _blockCounter = GameObject.FindGameObjectsWithTag("Block").Length;
@@ -18,21 +21,34 @@ public class GameController : MonoBehaviour
             GameFinished();
         }
 
+        if (LoseGame.IsLose)
+        {
+            GameLoosed();
+        }
+
         if (Input.GetKeyDown("x"))
         {
             DestroyAllBlocks();
         }
     }
 
-    public void BlockDestroyed()
-    {
-        _blockCounter -= 1;
-    }
-
+    //////////////////////////////////////////////////////
     void GameFinished()
     {
         Time.timeScale = 0;
         WinCanvas.SetActive(true);
+    }
+
+    void GameLoosed()
+    {
+        Time.timeScale = 0;
+        LoseCanvas.SetActive(true);
+    }
+    //////////////////////////////////////////////////////
+    
+    public void BlockDestroyed()
+    {
+        _blockCounter -= 1;
     }
 
     void DestroyAllBlocks()

@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class LoseGame : MonoBehaviour
 {
+    public bool IsLose;
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Ball")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            IsLose = true;
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }
