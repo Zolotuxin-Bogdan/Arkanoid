@@ -14,4 +14,19 @@ public class ControllScenesAndMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void LoadMenuScene()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void LoadNextLvl()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void RetryLvl()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }

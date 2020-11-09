@@ -12,7 +12,9 @@ public class GameController : MonoBehaviour
     public LoseGame LoseGame;
     void Start()
     {
+        Time.timeScale = 1;
         _blockCounter = GameObject.FindGameObjectsWithTag("Block").Length;
+        
     }
     void Update()
     {
