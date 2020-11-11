@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UserInput_Axis : MonoBehaviour
+public class UserInput_Axis
 {
-    public Racket Racket;
-    void FixedUpdate()
-    {
-        Racket.MoveRacketByAxis(GetAxisDirection());
-    }
-
-    float GetAxisDirection()
+    public float GetHorizontalDirection()
     {
         return Input.GetAxisRaw("Horizontal");
+    }
+
+    public float GetVerticalDirection()
+    {
+        return Input.GetAxisRaw("Vertical");
     }
 }

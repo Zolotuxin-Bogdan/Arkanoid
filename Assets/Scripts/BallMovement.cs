@@ -7,20 +7,20 @@ public class BallMovement : MonoBehaviour
     public float Speed = 7f;
     private float _directionY = 1f;
     private float _directionX = 1f;
-    private Rigidbody2D _rb;
+    private Rigidbody _rb;
 
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody>();
         _rb.velocity = (Vector2.up + Vector2.right) * Speed * 1f;
     }
 
     void FixedUpdate()
     {
-        //GetComponent<Rigidbody2D>().velocity = new Vector2(_directionX * Speed, _directionY * Speed);
+
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.name == "Border Top" || col.gameObject.tag == "Block")
         {
