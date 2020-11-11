@@ -16,19 +16,36 @@ public class MoveByMouse : MonoBehaviour
     {
         _mousePos = _userInputMouse.GetMousePosition();
 
-        var yHalfExtents = RacketPlayZone.GetComponent<BoxCollider>().bounds.extents.y;
-        var yCenter = RacketPlayZone.GetComponent<BoxCollider>().bounds.center;
+        var xRacketExtents = Racket.GetComponent<BoxCollider>().bounds.extents.x;
 
-        var yUpper = yCenter.y + yHalfExtents;
-        var yLower = yCenter.y - yHalfExtents;
-        if (_mousePos.y > yUpper)
+
+        var yPlayZoneExtents = RacketPlayZone.GetComponent<BoxCollider>().bounds.extents.y;
+        var xPlayZoneExtents = RacketPlayZone.GetComponent<BoxCollider>().bounds.extents.x;
+        var PlayZoneCenter = RacketPlayZone.GetComponent<BoxCollider>().bounds.center;
+
+        var yUpperPlayZoneBorder = PlayZoneCenter.y + yPlayZoneExtents;
+        var yLowerPlayZoneBorder = PlayZoneCenter.y - yPlayZoneExtents;
+        var xRightPlayZoneBorder = PlayZoneCenter.x + xPlayZoneExtents;
+        var xLeftPlayZoneBorder = PlayZoneCenter.x - xPlayZoneExtents;
+
+        if (_mousePos.y > yUpperPlayZoneBorder)
         {
-            _mousePos.y = yUpper;
+            _mousePos.y = yUpperPlayZoneBorder;
         }
-        if (_mousePos.y < yLower)
+        if (_mousePos.y < yLowerPlayZoneBorder)
         {
-            _mousePos.y = yLower;
+            _mousePos.y = yLowerPlayZoneBorder;
         }
+
+        if (_mousePos.x - xRacketExtents < xLeftPlayZoneBorder)
+        {
+            _mousePos.x = xLeftPlayZoneBorder + xRacketExtents;
+        }
+        if (_mousePos.x + xRacketExtents > xRightPlayZoneBorder)
+        {
+            _mousePos.x = xRightPlayZoneBorder - xRacketExtents;
+        }
+
         _mousePos.z = Racket.transform.position.z;
         Racket.transform.position = Vector3.MoveTowards(Racket.transform.position, _mousePos, Speed * Time.deltaTime);
     }

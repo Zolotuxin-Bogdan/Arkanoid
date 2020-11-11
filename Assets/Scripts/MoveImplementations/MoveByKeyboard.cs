@@ -24,18 +24,25 @@ public class MoveByKeyboard : MonoBehaviour
 
         var movement = new Vector3(deltaX * Speed, deltaY * Speed);
 
-        var yHalfExtents = RacketPlayZone.GetComponent<BoxCollider>().bounds.extents.y;
-        var yCenter = RacketPlayZone.GetComponent<BoxCollider>().bounds.center;
+        var xRacketExtents = Racket.GetComponent<BoxCollider>().bounds.extents.x;
 
-        var yUpper = yCenter.y + yHalfExtents;
-        var yLower = yCenter.y - yHalfExtents;
+        var yPlayZoneExtents = RacketPlayZone.GetComponent<BoxCollider>().bounds.extents.y;
+        var xPlayZoneExtents = RacketPlayZone.GetComponent<BoxCollider>().bounds.extents.x;
+        var PlayZoneCenter = RacketPlayZone.GetComponent<BoxCollider>().bounds.center;
+
+        var yUpperPlayZoneBorder = PlayZoneCenter.y + yPlayZoneExtents;
+        var yLowerPlayZoneBorder = PlayZoneCenter.y - yPlayZoneExtents;
+        var xRightPlayZoneBorder = PlayZoneCenter.x + xPlayZoneExtents;
+        var xLeftPlayZoneBorder = PlayZoneCenter.x - xPlayZoneExtents;
 
         movement = Vector3.ClampMagnitude(movement, Speed);
         movement *= Time.deltaTime;
         movement = transform.TransformDirection(movement);
         _characterController.Move(movement);
 
-        var allowedY = Mathf.Clamp(Racket.transform.position.y, yLower, yUpper);
-        Racket.transform.position = new Vector3(Racket.transform.position.x, allowedY);
+        var allowedY = Mathf.Clamp(Racket.transform.position.y, yLowerPlayZoneBorder, yUpperPlayZoneBorder);
+        var allowedX = Mathf.Clamp(Racket.transform.position.x, xLeftPlayZoneBorder + xRacketExtents,
+            xRightPlayZoneBorder - xRacketExtents);
+        Racket.transform.position = new Vector3(allowedX, allowedY);
     }
 }

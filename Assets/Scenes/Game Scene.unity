@@ -364,7 +364,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &135215504
 GameObject:
@@ -1605,63 +1605,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.06, y: 2.2999997, z: 0.2}
   m_Center: {x: 0, y: 0.000000007450581, z: 0}
---- !u!1 &854508772
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 854508774}
-  - component: {fileID: 854508773}
-  - component: {fileID: 854508775}
-  m_Layer: 0
-  m_Name: UserInput
-  m_TagString: Untagged
-  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &854508773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 854508772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ff4465befbfe6458326f6f427a6344, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Racket: {fileID: 1875267978}
---- !u!4 &854508774
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 854508772}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.59, y: 4.09, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &854508775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 854508772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22fbf49ef9965b04d9c3f96d8a1dacfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &865743421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1694,7 +1637,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 10
-  UserInputAxis: {fileID: 854508775}
   Racket: {fileID: 1875267973}
   RacketPlayZone: {fileID: 1090910620}
 --- !u!114 &865743423
@@ -1721,7 +1663,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &865743425
 MonoBehaviour:
@@ -1736,7 +1678,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 40
-  UserInputMouse: {fileID: 854508773}
   Racket: {fileID: 1875267973}
   RacketPlayZone: {fileID: 1090910620}
 --- !u!1 &886502677
@@ -1939,8 +1880,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16, z: 0.19999999}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.15824519, y: 0.16, z: 0.19999999}
+  m_Center: {x: 0.00017647294, y: 0, z: 0}
 --- !u!212 &1090910622
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2004,7 +1945,7 @@ Transform:
   m_LocalScale: {x: 136.05318, y: 25.993122, z: 1.4527}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1224220517
 GameObject:
@@ -2037,7 +1978,7 @@ Transform:
   - {fileID: 413782023}
   - {fileID: 807856471}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1348900714
 GameObject:
@@ -2609,7 +2550,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee81a264a4fd0b54dadff25b34180425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RacketPlayZone: {fileID: 1090910620}
 --- !u!1 &1889764017
 GameObject:
   m_ObjectHideFlags: 0
