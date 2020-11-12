@@ -16,12 +16,12 @@ public class MoveByMouse : MonoBehaviour
     {
         _mousePos = _userInputMouse.GetMousePosition();
 
-        var xRacketExtents = Racket.GetComponent<BoxCollider>().bounds.extents.x;
+        var xRacketExtents = Racket.GetComponent<BoxCollider2D>().bounds.extents.x;
 
 
-        var yPlayZoneExtents = RacketPlayZone.GetComponent<BoxCollider>().bounds.extents.y;
-        var xPlayZoneExtents = RacketPlayZone.GetComponent<BoxCollider>().bounds.extents.x;
-        var PlayZoneCenter = RacketPlayZone.GetComponent<BoxCollider>().bounds.center;
+        var yPlayZoneExtents = RacketPlayZone.GetComponent<BoxCollider2D>().bounds.extents.y;
+        var xPlayZoneExtents = RacketPlayZone.GetComponent<BoxCollider2D>().bounds.extents.x;
+        var PlayZoneCenter = RacketPlayZone.GetComponent<BoxCollider2D>().bounds.center;
 
         var yUpperPlayZoneBorder = PlayZoneCenter.y + yPlayZoneExtents;
         var yLowerPlayZoneBorder = PlayZoneCenter.y - yPlayZoneExtents;
