@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Settings : MonoBehaviour
 {
     public GameObject RacketSkin;
+    public StorageProvider StorageProvider;
     private RacketColor _racketColor;
 
     private Image _spriteImage;
@@ -28,9 +29,10 @@ public class Settings : MonoBehaviour
 
     void OnDestroy()
     {
-        RacketColor.RedColor = _spriteImage.color.r;
-        RacketColor.GreenColor = _spriteImage.color.g;
-        RacketColor.BlueColor = _spriteImage.color.b;
+        //RacketColor.RedColor = _spriteImage.color.r;
+        //RacketColor.GreenColor = _spriteImage.color.g;
+        //RacketColor.BlueColor = _spriteImage.color.b;
+        StorageProvider.SaveRacketColor();
     }
 
     public void Red_Slider_Changed(float newValue)

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Racket : MonoBehaviour
 {
+    public StorageProvider StorageProvider;
+
     private SpriteRenderer _sprite;
     private Color _colorFromSettings;
 
@@ -11,7 +13,7 @@ public class Racket : MonoBehaviour
     {
         _sprite = GetComponent<SpriteRenderer>();
 
-        _colorFromSettings = new Color(RacketColor.RedColor, RacketColor.GreenColor, RacketColor.BlueColor, 255);
+        _colorFromSettings = StorageProvider.LoadRacketColor();
 
         _sprite.color = _colorFromSettings;
     }
