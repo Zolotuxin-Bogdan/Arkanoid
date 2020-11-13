@@ -6,15 +6,27 @@ using UnityEngine.UI;
 public class Score : MonoBehaviour
 {
     public Text Txt;
-    private int _score = 0;
+    private int _globalScore = 0;
+    private int _lvlScore = 0;
 
     void FixedUpdate()
     {
-        Txt.text = "Score: " + _score;
+        Txt.text = "Score: " + (_globalScore + _lvlScore);
     }
 
     public void AddScore()
     {
-        _score += 1;
+        _lvlScore += 1;
+    }
+
+    public void ResetLvlScore()
+    {
+        _lvlScore = 0;
+    }
+
+    public void SaveLvlScoreToGlobalScore()
+    {
+        _globalScore += _lvlScore;
+        ResetLvlScore();
     }
 }

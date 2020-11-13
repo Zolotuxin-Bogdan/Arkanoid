@@ -4,38 +4,28 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    private int _blockCounter;
 
     public GameObject WinCanvas;
     public GameObject LoseCanvas;
+    public GameObject Ball;
+    public GameObject BallSpawnLocation;
 
     public LoseGame LoseGame;
     void Start()
     {
         Time.timeScale = 1;
-        _blockCounter = GameObject.FindGameObjectsWithTag("Block").Length;
-        
     }
     void Update()
     {
-        if (_blockCounter <= 0)
-        {
-            GameFinished();
-        }
-
         if (LoseGame.IsLose)
         {
+            LoseGame.IsLose = false;
             GameLoosed();
-        }
-
-        if (Input.GetKeyDown("x"))
-        {
-            DestroyAllBlocks();
         }
     }
 
     //////////////////////////////////////////////////////
-    void GameFinished()
+    public void GameFinished()
     {
         Time.timeScale = 0;
         WinCanvas.SetActive(true);
@@ -47,20 +37,13 @@ public class GameController : MonoBehaviour
         LoseCanvas.SetActive(true);
     }
     //////////////////////////////////////////////////////
-    
-    public void BlockDestroyed()
-    {
-        _blockCounter -= 1;
-    }
 
-    void DestroyAllBlocks()
+    public void PlayGame()
     {
-        var blocks = GameObject.FindGameObjectsWithTag("Block");
-        foreach (var block in blocks)
-        {
-            Destroy(block);
-        }
-
-        _blockCounter = 0;
+        Time.timeScale = 1;
+        WinCanvas.SetActive(false);
+        LoseCanvas.SetActive(false);
+        Ball.transform.position = BallSpawnLocation.transform.position;
+        Ball.GetComponent<BallMovement>().SetDefaultBallMovement();
     }
 }

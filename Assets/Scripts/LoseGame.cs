@@ -11,7 +11,6 @@ public class LoseGame : MonoBehaviour
         if (col.gameObject.tag == "Ball")
         {
             IsLose = true;
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

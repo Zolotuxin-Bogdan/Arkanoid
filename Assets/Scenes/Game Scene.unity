@@ -313,6 +313,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 35346225}
   m_CullTransparentMesh: 0
+--- !u!1 &75798884
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 75798886}
+  - component: {fileID: 75798885}
+  m_Layer: 0
+  m_Name: BlockManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &75798885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 75798884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 062b905055f5fca40836d3a877f0abaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Block: {fileID: 5625297695599635872, guid: 1064ee9979a71784ea2e36ac8e24880e, type: 3}
+  Score: {fileID: 439788185}
+  GameController: {fileID: 439788183}
+--- !u!4 &75798886
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 75798884}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.9, y: 2.72, z: -300.0698}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &76678966
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,7 +500,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &180174742
 GameObject:
@@ -718,9 +764,8 @@ GameObject:
   m_Component:
   - component: {fileID: 439788184}
   - component: {fileID: 439788183}
-  - component: {fileID: 439788185}
   - component: {fileID: 439788186}
-  - component: {fileID: 439788187}
+  - component: {fileID: 439788185}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -742,6 +787,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WinCanvas: {fileID: 413782022}
   LoseCanvas: {fileID: 807856470}
+  Ball: {fileID: 1348900714}
+  BallSpawnLocation: {fileID: 2132944640}
   LoseGame: {fileID: 196219786}
 --- !u!4 &439788184
 Transform:
@@ -755,7 +802,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &439788185
 MonoBehaviour:
@@ -782,19 +829,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1f002415d74203468ebfa0876190229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &439788187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 439788182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d5de2525ce69cb4b9b0795c3c8af61f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Block: {fileID: 4054484700933983861, guid: 1064ee9979a71784ea2e36ac8e24880e, type: 3}
 --- !u!1 &443041882
 GameObject:
   m_ObjectHideFlags: 0
@@ -1282,9 +1316,33 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 439788186}
-        m_TargetAssemblyTypeName: ControllScenesAndMenu, Assembly-CSharp
-        m_MethodName: LoadNextLvl
+      - m_Target: {fileID: 75798885}
+        m_TargetAssemblyTypeName: BlockManager, Assembly-CSharp
+        m_MethodName: GenerateLvl
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 439788183}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: PlayGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 439788185}
+        m_TargetAssemblyTypeName: Score, Assembly-CSharp
+        m_MethodName: SaveLvlScoreToGlobalScore
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1733,7 +1791,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &865743425
 MonoBehaviour:
@@ -1965,7 +2023,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00019295514, y: 0}
+  m_Offset: {x: 0.00019295514, y: -0.037319317}
   m_SpriteTilingProperty:
     border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
     pivot: {x: 0.5, y: 0.5}
@@ -1976,7 +2034,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.15802391, y: 0.16}
+  m_Size: {x: 0.15802391, y: 0.08536136}
   m_EdgeRadius: 0
 --- !u!212 &1090910622
 SpriteRenderer:
@@ -2073,6 +2131,7 @@ Transform:
   - {fileID: 1966744943}
   - {fileID: 413782023}
   - {fileID: 807856471}
+  - {fileID: 1445459459}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2109,6 +2168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 7
+  BlockManager: {fileID: 75798885}
 --- !u!50 &1348900716
 Rigidbody2D:
   serializedVersion: 4
@@ -2215,7 +2275,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1348900714}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.36, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -1.5, z: 0}
   m_LocalScale: {x: 7, y: 7, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2375,12 +2435,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1445459457}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.032, y: -0.123, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.1217719, y: -0.4370751, z: 12.633193}
   m_LocalScale: {x: 10.782442, y: 4.203822, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_Father: {fileID: 1224220518}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1767603732
 GameObject:
@@ -2919,9 +2979,45 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 439788186}
-        m_TargetAssemblyTypeName: ControllScenesAndMenu, Assembly-CSharp
-        m_MethodName: RetryLvl
+      - m_Target: {fileID: 75798885}
+        m_TargetAssemblyTypeName: BlockManager, Assembly-CSharp
+        m_MethodName: DestroyAllBlocks
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 75798885}
+        m_TargetAssemblyTypeName: BlockManager, Assembly-CSharp
+        m_MethodName: GenerateLvl
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 439788183}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: PlayGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 439788185}
+        m_TargetAssemblyTypeName: Score, Assembly-CSharp
+        m_MethodName: ResetLvlScore
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2969,3 +3065,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1997353541}
   m_CullTransparentMesh: 0
+--- !u!1 &2132944640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2132944641}
+  m_Layer: 0
+  m_Name: BallSpawnLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2132944641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2132944640}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
