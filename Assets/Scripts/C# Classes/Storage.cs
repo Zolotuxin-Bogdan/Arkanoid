@@ -8,15 +8,28 @@ public class Storage
 {
     public void SaveData<T>(T data, string path)
     {
-        //Debug.Log(data);
-        //Debug.Log(SerializeToJson(data));
+        var directoryName = Path.GetDirectoryName(path);
+        if (!Directory.Exists(directoryName))
+        {
+            Directory.CreateDirectory(directoryName);
+        }
 
-        File.WriteAllText(path, SerializeToJson(data));
+        if (!File.Exists(path))
+        {
+            File.Create(path).Close();
+        }
+
+        var sw = new StreamWriter(path);
+        sw.WriteLine(SerializeToJson(data));
+        sw.Close();
     }
 
     public T LoadData<T>(string path)
     {
-        return DeserializeJson<T>(File.ReadAllText(path));
+        var sr = new StreamReader(path);
+        var dataFromFile = sr.ReadLine();
+        sr.Close();
+        return DeserializeJson<T>(dataFromFile);
     }
 
     private static string SerializeToJson<T>(T obj) =>

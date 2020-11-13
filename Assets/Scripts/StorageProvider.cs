@@ -19,24 +19,20 @@ public class StorageProvider : MonoBehaviour
 
     public void SaveRacketColor()
     {
-        var directoryName = Path.GetDirectoryName(_racketColorPath);
-        if (!Directory.Exists(directoryName))
-        {
-            Directory.CreateDirectory(directoryName);
-        }
-
-        if (!File.Exists(_racketColorPath))
-        {
-            File.Create(_racketColorPath);
-        }
-
         var racketColor = RacketColor.GetComponent<Image>().color;
+        var racketSaveColor = new RacketColor
+        {
+            RedColor = racketColor.r,
+            GreenColor = racketColor.g,
+            BlueColor = racketColor.b
+        };
 
-        _storage.SaveData(racketColor, _racketColorPath);
+        _storage.SaveData(racketSaveColor, _racketColorPath);
     }
 
     public Color LoadRacketColor()
     {
-        return _storage.LoadData<Color>(_racketColorPath);
+        var racketLoadColor = _storage.LoadData<RacketColor>(_racketColorPath);
+        return new Color(racketLoadColor.RedColor, racketLoadColor.GreenColor, racketLoadColor.BlueColor);
     }
 }
