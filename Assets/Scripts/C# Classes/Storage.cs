@@ -19,17 +19,19 @@ public class Storage
             File.Create(path).Close();
         }
 
-        var sw = new StreamWriter(path);
-        sw.WriteLine(SerializeToJson(data));
-        sw.Close();
+        using (var sw = new StreamWriter(path))
+        {
+            sw.WriteLine(SerializeToJson(data));
+        }     
     }
 
     public T LoadData<T>(string path)
     {
-        var sr = new StreamReader(path);
-        var dataFromFile = sr.ReadLine();
-        sr.Close();
-        return DeserializeJson<T>(dataFromFile);
+        using (var sr = new StreamReader(path))
+        {
+            var dataFromFile = sr.ReadLine();
+            return DeserializeJson<T>(dataFromFile);
+        }
     }
 
     private static string SerializeToJson<T>(T obj) =>
