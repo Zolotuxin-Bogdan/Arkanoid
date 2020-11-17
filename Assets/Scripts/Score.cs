@@ -7,26 +7,28 @@ public class Score : MonoBehaviour
 {
     public Text Txt;
     private int _globalScore = 0;
-    private int _lvlScore = 0;
+    private int _levelScore = 0;
 
-    void FixedUpdate()
+    public void SetScoreToUI()
     {
-        Txt.text = "Score: " + (_globalScore + _lvlScore);
+        Txt.text = "Score: " + (_globalScore + _levelScore);
     }
 
-    public void AddScore()
+    public void AddAmountToScore()
     {
-        _lvlScore += 1;
+        _levelScore += 1;
+        SetScoreToUI();
     }
 
     public void ResetLvlScore()
     {
-        _lvlScore = 0;
+        _levelScore = 0;
     }
 
     public void SaveLvlScoreToGlobalScore()
     {
-        _globalScore += _lvlScore;
+        _globalScore += _levelScore;
         ResetLvlScore();
+        SetScoreToUI();
     }
 }

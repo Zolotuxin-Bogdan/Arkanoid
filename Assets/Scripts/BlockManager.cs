@@ -10,10 +10,10 @@ public class BlockManager : MonoBehaviour
     public Score Score;
     public GameController GameController;
 
-    private readonly LVL_Initializer _initializer = new LVL_Initializer();
+    private readonly Level_Initializer _initializer = new Level_Initializer();
 
     private int _blockCount = 0;
-    private LVL _currentLvl;
+    private Level _currentLvl;
 
     void Awake()
     {
@@ -48,16 +48,16 @@ public class BlockManager : MonoBehaviour
     {
         Destroy(block);
         _blockCount--;
-        Score.AddScore();
+        Score.AddAmountToScore();
         if (_blockCount <= 0)
         {
             GameController.GameFinished();
         }
     }
 
-    void GenerateBlocks(LVL lvl)
+    void GenerateBlocks(Level level)
     {
-        foreach (var block in lvl.BlocksList)
+        foreach (var block in level.BlocksList)
         {
             Instantiate(Block, new Vector3(block.Item1, block.Item2), new Quaternion(0, 0, 0, 0));
             _blockCount++;
