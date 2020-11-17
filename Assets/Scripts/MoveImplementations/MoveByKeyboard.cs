@@ -9,7 +9,7 @@ public class MoveByKeyboard : MonoBehaviour
     public GameObject Racket;
     public GameObject RacketPlayZone;
 
-    private readonly UserInput_Axis _userInputAxis = new UserInput_Axis();
+    private readonly UserInput_KeyBoard _userInputAxis = new UserInput_KeyBoard();
 
     public void MoveRacket()
     {

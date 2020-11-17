@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UserInput_Axis
+public class UserInput_KeyBoard
 {
     public float GetHorizontalDirection()
     {
