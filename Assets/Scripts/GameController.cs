@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour
     public GameObject BallSpawnLocation;
 
     public LoseGame LoseGame;
+
+    private readonly UserInput_KeyBoard _userInputKeyBoard = new UserInput_KeyBoard();
     void Start()
     {
         Time.timeScale = 1;
@@ -21,6 +23,11 @@ public class GameController : MonoBehaviour
         {
             LoseGame.IsLose = false;
             GameLoosed();
+        }
+
+        if (_userInputKeyBoard.Is_X_Pressed())
+        {
+            BlockManager.Instance.DestroyAllBlocks();
         }
     }
 

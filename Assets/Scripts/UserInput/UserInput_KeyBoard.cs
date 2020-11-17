@@ -13,4 +13,9 @@ public class UserInput_KeyBoard
     {
         return Input.GetAxisRaw("Vertical");
     }
+
+    public bool Is_X_Pressed()
+    {
+        return Input.GetKeyDown("x");
+    }
 }

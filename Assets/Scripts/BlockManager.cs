@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BlockManager : MonoBehaviour
 {
+    public static BlockManager Instance = null;
+
     public GameObject Block;
     public Score Score;
     public GameController GameController;
@@ -13,23 +15,24 @@ public class BlockManager : MonoBehaviour
     private int _blockCount = 0;
     private LVL _currentLvl;
 
+    void Awake()
+    {
+        if (Instance == null)
+        { 
+            Instance = this; 
+        }
+        else if (Instance == this)
+        { 
+            Destroy(gameObject); 
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
         GenerateLvl();
     }
 
-    void FixedUpdate()
-    {
-        if (_blockCount <= 0)
-        {
-            GameController.GameFinished();
-        }
-
-        if (Input.GetKeyDown("x"))
-        {
-            DestroyAllBlocks();
-        }
-    }
     public void GenerateLvl()
     {
         _currentLvl = _initializer.GetRandomLvl();
@@ -46,6 +49,10 @@ public class BlockManager : MonoBehaviour
         Destroy(block);
         _blockCount--;
         Score.AddScore();
+        if (_blockCount <= 0)
+        {
+            GameController.GameFinished();
+        }
     }
 
     void GenerateBlocks(LVL lvl)
@@ -66,5 +73,9 @@ public class BlockManager : MonoBehaviour
         }
 
         _blockCount = 0;
+        if (_blockCount <= 0)
+        {
+            GameController.GameFinished();
+        }
     }
 }
