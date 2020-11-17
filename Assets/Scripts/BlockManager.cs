@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BlockManager : MonoBehaviour
@@ -44,11 +45,16 @@ public class BlockManager : MonoBehaviour
         GenerateBlocks(_currentLvl);
     }
 
-    public void DestroyBlock(GameObject block)
+    public void DestroyBlock(GameObject receivedBlock)
     {
-        Destroy(block);
+        Destroy(receivedBlock);
         _blockCount--;
-        Score.AddAmountToScore();
+
+        var amount = from block in _currentLvl.BlocksList
+            where block.XPosition.Equals(receivedBlock.transform.position.x) && block.YPosition.Equals(receivedBlock.transform.position.y)
+            select block.BlockScoreCost;
+        Score.AddAmountToScore(amount.First());
+
         if (_blockCount <= 0)
         {
             GameController.GameFinished();
@@ -59,7 +65,7 @@ public class BlockManager : MonoBehaviour
     {
         foreach (var block in level.BlocksList)
         {
-            Instantiate(Block, new Vector3(block.Item1, block.Item2), new Quaternion(0, 0, 0, 0));
+            Instantiate(Block, new Vector3(block.XPosition, block.YPosition), new Quaternion(0, 0, 0, 0));
             _blockCount++;
         }
     }

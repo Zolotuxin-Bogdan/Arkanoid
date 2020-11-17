@@ -14,9 +14,9 @@ public class Score : MonoBehaviour
         Txt.text = "Score: " + (_globalScore + _levelScore);
     }
 
-    public void AddAmountToScore()
+    public void AddAmountToScore(int amount)
     {
-        _levelScore += 1;
+        _levelScore += amount;
         SetScoreToUI();
     }
 

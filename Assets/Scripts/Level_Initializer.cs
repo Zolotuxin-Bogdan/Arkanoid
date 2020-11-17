@@ -10,20 +10,34 @@ public class Level_Initializer
 
     public Level_Initializer()
     {
-        _level1.BlocksList = new List<(int, int)>
+        _level1.BlocksList = new List<Block>
         {
-            (-9, 2), (-7, 2), (-5, 2), (-2, 2), (0, 2), (2, 2), (5, 2), (7, 2), (9,2),
-            (-8, 1), (-6, 1), (-3, 1), (0, 1), (3, 1), (6, 1), (8, 1)
+            new Block(-9f, 2f, 1), new Block(-7f, 2f, 1), 
+            new Block(-5f, 2f, 1), new Block(-2f, 2f, 1),
+            new Block(0f, 2f, 1), new Block(2f, 2f, 1),
+            new Block(5f, 2f, 1), new Block(7f, 2f, 1),
+            new Block(9f,2f, 1), new Block(-8f, 1f, 1),
+            new Block(-6f, 1f, 1), new Block(-3f, 1f, 1),
+            new Block(0f, 1f, 1), new Block(3f, 1f, 1),
+            new Block(6f, 1f, 1), new Block(8f, 1f, 1)
         };
 
         _listOfLevels.Add(_level1);
         ///////////////////////////////////////////////////////////////////////////////
         
-        _level2.BlocksList = new List<(int, int)>
+        _level2.BlocksList = new List<Block>
         {
-            (-5, 3), (-3, 3), (-1, 3), (1, 3), (3, 3), (5, 3),
-            (-8, 2), (-6, 2), (-4, 2), (-2, 2), (0, 2), (2, 2), (4, 2), (6, 2), (8,2),
-            (-9, 1), (-5, 1), (-3, 1), (0, 1), (3, 1), (5, 1), (9, 1)
+            new Block(-5f, 3f, 2), new Block(-3f, 3f, 2),
+            new Block(-1f, 3f, 2), new Block(1f, 3f, 2),
+            new Block(3f, 3f, 2), new Block(5f, 3f, 2),
+            new Block(-8f, 2f, 2), new Block(-6f, 2f, 2),
+            new Block(-4f, 2f, 2), new Block(-2f, 2f, 2),
+            new Block(0f, 2f, 2), new Block(2f, 2f, 2),
+            new Block(4f, 2f, 2), new Block(6f, 2f, 2),
+            new Block(8f,2f, 2), new Block(-9f, 1f, 2),
+            new Block(-5f, 1f, 2), new Block(-3f, 1f, 2),
+            new Block(0f, 1f, 2), new Block(3f, 1f, 2),
+            new Block(5f, 1f, 2), new Block(9f, 1f, 2)
         };
 
         _listOfLevels.Add(_level2);

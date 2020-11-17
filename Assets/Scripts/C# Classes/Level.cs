@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Level
 {
-    public List<(int, int)> BlocksList = new List<(int, int)>();
+    public List<Block> BlocksList = new List<Block>();
 }
