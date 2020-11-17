@@ -9,12 +9,12 @@ public class MoveByKeyboard : MonoBehaviour
     public GameObject Racket;
     public GameObject RacketPlayZone;
 
-    private readonly UserInput_KeyBoard _userInputAxis = new UserInput_KeyBoard();
+    private readonly UserInput_KeyBoard _userInputKeyBoard = new UserInput_KeyBoard();
 
     public void MoveRacket()
     {
-        var deltaX = _userInputAxis.GetHorizontalDirection();
-        var deltaY = _userInputAxis.GetVerticalDirection();
+        var deltaX = _userInputKeyBoard.GetHorizontalDirection();
+        var deltaY = _userInputKeyBoard.GetVerticalDirection();
 
         var movement = new Vector3(deltaX * Speed, deltaY * Speed);
 
