@@ -27,6 +27,10 @@ public class Storage
 
     public T LoadData<T>(string path)
     {
+        if (!File.Exists(path))
+        {
+            return default;
+        }
         using (var sr = new StreamReader(path))
         {
             var dataFromFile = sr.ReadLine();

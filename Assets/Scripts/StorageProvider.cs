@@ -32,7 +32,13 @@ public class StorageProvider : MonoBehaviour
 
     public Color LoadRacketColor()
     {
+        if (_storage.LoadData<RacketColor>(_racketColorPath) == default)
+        { 
+            return new Color(255, 255, 255);
+        }
+
         var racketLoadColor = _storage.LoadData<RacketColor>(_racketColorPath);
         return new Color(racketLoadColor.RedColor, racketLoadColor.GreenColor, racketLoadColor.BlueColor);
+
     }
 }
