@@ -50,10 +50,11 @@ public class BlockManager : MonoBehaviour
         Destroy(receivedBlock);
         _blockCount--;
 
-        var amount = from block in _currentLvl.BlocksList
-            where block.XPosition.Equals(receivedBlock.transform.position.x) && block.YPosition.Equals(receivedBlock.transform.position.y)
-            select block.BlockScoreCost;
-        Score.AddAmountToScore(amount.First());
+        var amount = _currentLvl.BlocksList
+            .Where(t => t.XPosition.Equals(receivedBlock.transform.position.x) &&
+                        t.YPosition.Equals(receivedBlock.transform.position.y))
+            .Select(t => t.BlockScoreCost).FirstOrDefault();
+        Score.AddAmountToScore(amount);
 
         if (_blockCount <= 0)
         {
