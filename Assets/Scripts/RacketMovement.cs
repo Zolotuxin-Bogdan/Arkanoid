@@ -17,13 +17,17 @@ public class RacketMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        _keyboardMove.MoveRacket();
-
-        if (IsMouseMoves(_oldMousePos, _userInputMouse.GetMousePosition()))
+        if (!GameController.Instance.IsPaused)
         {
-            _mouseMove.MoveRacket();
+            _keyboardMove.MoveRacket();
+
+            if (IsMouseMoves(_oldMousePos, _userInputMouse.GetMousePosition()))
+            {
+                _mouseMove.MoveRacket();
+            }
+
+            _oldMousePos = _userInputMouse.GetMousePosition();
         }
-        _oldMousePos = _userInputMouse.GetMousePosition();
     }
 
     bool IsMouseMoves(Vector3 oldPos, Vector3 newPos)

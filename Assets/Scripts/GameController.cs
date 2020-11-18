@@ -2,6 +2,7 @@
 
 public class GameController : MonoBehaviour
 {
+    public static GameController Instance = null;
 
     public GameObject WinCanvas;
     public GameObject LoseCanvas;
@@ -10,10 +11,24 @@ public class GameController : MonoBehaviour
 
     public LoseGame LoseGame;
 
+    public bool IsPaused;
+
     private readonly UserInput_KeyBoard _userInputKeyBoard = new UserInput_KeyBoard();
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance == this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
+    }
     void Start()
     {
-        Time.timeScale = 1;
+        IsPaused = false;
     }
     void Update()
     {
@@ -32,20 +47,22 @@ public class GameController : MonoBehaviour
     //////////////////////////////////////////////////////
     public void GameFinished()
     {
-        Time.timeScale = 0;
+        IsPaused = true;
+        Ball.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         WinCanvas.SetActive(true);
     }
 
     void GameLoosed()
     {
-        Time.timeScale = 0;
+        IsPaused = true;
+        Ball.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         LoseCanvas.SetActive(true);
     }
     //////////////////////////////////////////////////////
 
     public void PlayGame()
     {
-        Time.timeScale = 1;
+        IsPaused = false;
         WinCanvas.SetActive(false);
         LoseCanvas.SetActive(false);
         Ball.transform.position = BallSpawnLocation.transform.position;

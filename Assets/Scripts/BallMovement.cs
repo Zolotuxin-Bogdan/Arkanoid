@@ -20,29 +20,31 @@ public class BallMovement : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Block"))
+        if (!GameController.Instance.IsPaused)
         {
-            var block = col.gameObject;
-            BlockManager.Instance.DestroyBlock(block);
-        }
+            if (col.gameObject.CompareTag("Block"))
+            {
+                var block = col.gameObject;
+                BlockManager.Instance.DestroyBlock(block);
+            }
 
-        if (col.gameObject.name == "Border Top" || col.gameObject.CompareTag("Block"))
-        {
-            _directionY *= -1f;
-            _rb.velocity = new Vector2(_directionX * Speed, _directionY * Speed);
-        }
+            if (col.gameObject.name == "Border Top" || col.gameObject.CompareTag("Block"))
+            {
+                _directionY *= -1f;
+                _rb.velocity = new Vector2(_directionX * Speed, _directionY * Speed);
+            }
 
-        if (col.gameObject.name == "Border Left" || col.gameObject.name == "Border Right")
-        {
-            _directionX *= -1f;
-            _rb.velocity = new Vector2(_directionX * Speed, _directionY * Speed);
-        }
+            if (col.gameObject.name == "Border Left" || col.gameObject.name == "Border Right")
+            {
+                _directionX *= -1f;
+                _rb.velocity = new Vector2(_directionX * Speed, _directionY * Speed);
+            }
 
-        if (col.gameObject.name == "Racket")
-        {
-            _directionY *= -1f;
-            _rb.velocity = new Vector2(_directionX * Speed, _directionY * Speed);
+            if (col.gameObject.name == "Racket")
+            {
+                _directionY *= -1f;
+                _rb.velocity = new Vector2(_directionX * Speed, _directionY * Speed);
+            }
         }
-
     }
 }
