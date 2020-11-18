@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Block
+﻿public class Block
 {
     public float XPosition { get; set; }
     public float YPosition { get; set; }
