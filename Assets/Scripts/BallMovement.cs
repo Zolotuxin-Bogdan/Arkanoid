@@ -5,7 +5,6 @@ using UnityEngine;
 public class BallMovement : MonoBehaviour
 {
     public float Speed = 7f;
-    public BlockManager BlockManager;
 
     private float _directionY = 1f;
     private float _directionX = 1f;
@@ -26,7 +25,7 @@ public class BallMovement : MonoBehaviour
         if (col.gameObject.CompareTag("Block"))
         {
             var block = col.gameObject;
-            BlockManager.DestroyBlock(block);
+            BlockManager.Instance.DestroyBlock(block);
         }
 
         if (col.gameObject.name == "Border Top" || col.gameObject.CompareTag("Block"))
