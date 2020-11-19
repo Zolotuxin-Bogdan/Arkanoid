@@ -7,13 +7,13 @@ public class GameController : MonoBehaviour
     public GameObject WinCanvas;
     public GameObject LoseCanvas;
     public GameObject Ball;
-    public GameObject BallSpawnLocation;
 
     public LoseGame LoseGame;
 
     public bool IsPaused;
 
     private readonly UserInput_KeyBoard _userInputKeyBoard = new UserInput_KeyBoard();
+    private BallMovement _ballMovement;
     void Awake()
     {
         if (Instance == null)
@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         IsPaused = false;
+        _ballMovement = Ball.GetComponent<BallMovement>();
     }
     void Update()
     {
@@ -48,14 +49,14 @@ public class GameController : MonoBehaviour
     public void GameFinished()
     {
         IsPaused = true;
-        Ball.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        _ballMovement.StopBallMovement();
         WinCanvas.SetActive(true);
     }
 
     void GameLoosed()
     {
         IsPaused = true;
-        Ball.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        _ballMovement.StopBallMovement();
         LoseCanvas.SetActive(true);
     }
     //////////////////////////////////////////////////////
@@ -65,7 +66,7 @@ public class GameController : MonoBehaviour
         IsPaused = false;
         WinCanvas.SetActive(false);
         LoseCanvas.SetActive(false);
-        Ball.transform.position = BallSpawnLocation.transform.position;
-        Ball.GetComponent<BallMovement>().SetDefaultBallMovement();
+        _ballMovement.SetDefaultBallPosition();
+        _ballMovement.SetDefaultBallMovement();
     }
 }

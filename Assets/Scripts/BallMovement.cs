@@ -3,6 +3,7 @@
 public class BallMovement : MonoBehaviour
 {
     public float Speed = 7f;
+    public GameObject BallSpawnLocation;
 
     private float _directionY = 1f;
     private float _directionX = 1f;
@@ -18,6 +19,17 @@ public class BallMovement : MonoBehaviour
     {
         _rb.velocity = (Vector2.up + Vector2.right) * Speed * 1f;
     }
+
+    public void SetDefaultBallPosition()
+    {
+        transform.position = BallSpawnLocation.transform.position;
+    }
+
+    public void StopBallMovement()
+    {
+        _rb.velocity = new Vector2(0, 0);
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         if (!GameController.Instance.IsPaused)
