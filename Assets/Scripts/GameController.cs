@@ -30,6 +30,7 @@ public class GameController : MonoBehaviour
     {
         IsPaused = false;
         _ballMovement = Ball.GetComponent<BallMovement>();
+        BlockManager.Instance.GameFinishedEvent += GameFinished;
     }
     void Update()
     {

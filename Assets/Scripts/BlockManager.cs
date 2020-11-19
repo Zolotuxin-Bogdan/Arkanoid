@@ -1,13 +1,16 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public class BlockManager : MonoBehaviour
 {
     public static BlockManager Instance = null;
 
+    //public delegate void GameFinishedHandler();
+    public event Action GameFinishedEvent;
+
     public GameObject Block;
     public Score Score;
-    public GameController GameController;
 
     private readonly Level_Initializer _initializer = new Level_Initializer();
 
@@ -56,7 +59,7 @@ public class BlockManager : MonoBehaviour
 
         if (_blockCount <= 0)
         {
-            GameController.GameFinished();
+            GameFinishedEvent?.Invoke();
         }
     }
 
@@ -80,7 +83,7 @@ public class BlockManager : MonoBehaviour
         _blockCount = 0;
         if (_blockCount <= 0)
         {
-            GameController.GameFinished();
+            GameFinishedEvent?.Invoke();
         }
     }
 }
