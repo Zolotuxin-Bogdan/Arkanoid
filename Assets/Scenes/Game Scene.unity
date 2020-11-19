@@ -788,8 +788,8 @@ MonoBehaviour:
   WinCanvas: {fileID: 413782022}
   LoseCanvas: {fileID: 807856470}
   Ball: {fileID: 1348900714}
-  BallSpawnLocation: {fileID: 2132944640}
   LoseGame: {fileID: 196219786}
+  IsPaused: 0
 --- !u!4 &439788184
 Transform:
   m_ObjectHideFlags: 0
@@ -2168,7 +2168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 7
-  BlockManager: {fileID: 75798885}
+  BallSpawnLocation: {fileID: 2132944640}
 --- !u!50 &1348900716
 Rigidbody2D:
   serializedVersion: 4
@@ -3018,6 +3018,18 @@ MonoBehaviour:
       - m_Target: {fileID: 439788185}
         m_TargetAssemblyTypeName: Score, Assembly-CSharp
         m_MethodName: ResetLvlScore
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 439788185}
+        m_TargetAssemblyTypeName: Score, Assembly-CSharp
+        m_MethodName: SetScoreToUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
