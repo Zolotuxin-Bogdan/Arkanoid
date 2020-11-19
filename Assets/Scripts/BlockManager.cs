@@ -14,7 +14,7 @@ public class BlockManager : MonoBehaviour
 
     private readonly Level_Initializer _initializer = new Level_Initializer();
 
-    public int BlockCount = 0;
+    private int _blockCount = 0;
     private Level _currentLvl;
 
     void Awake()
@@ -27,7 +27,7 @@ public class BlockManager : MonoBehaviour
         { 
             Destroy(gameObject); 
         }
-        //DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
@@ -51,7 +51,7 @@ public class BlockManager : MonoBehaviour
         if(!receivedBlock.CompareTag("Block")) return;
 
         Destroy(receivedBlock);
-        BlockCount--;
+        _blockCount--;
         var receivedBlockId = receivedBlock.GetComponent<BlockId>().Id;
         
         var amount = _currentLvl.BlocksList
@@ -59,7 +59,7 @@ public class BlockManager : MonoBehaviour
             .Select(t => t.BlockScoreCost).FirstOrDefault();
         Score.AddAmountToScore(amount);
 
-        if (BlockCount <= 0)
+        if (_blockCount <= 0)
         {
             GameFinishedEvent?.Invoke();
         }
@@ -69,8 +69,9 @@ public class BlockManager : MonoBehaviour
     {
         foreach (var block in level.BlocksList)
         {
-            Instantiate(Block, new Vector3(block.XPosition, block.YPosition), new Quaternion(0, 0, 0, 0));
-            BlockCount++;
+            var newInstance = Instantiate(Block, new Vector3(block.XPosition, block.YPosition), new Quaternion(0, 0, 0, 0));
+            newInstance.GetComponent<BlockId>().Id = _blockCount;
+            _blockCount++;
         }
     }
 
@@ -82,8 +83,8 @@ public class BlockManager : MonoBehaviour
             Destroy(block);
         }
 
-        BlockCount = 0;
-        if (BlockCount <= 0)
+        _blockCount = 0;
+        if (_blockCount <= 0)
         {
             GameFinishedEvent?.Invoke();
         }
