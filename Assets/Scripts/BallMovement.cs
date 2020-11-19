@@ -32,14 +32,14 @@ public class BallMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        if (col.gameObject.CompareTag("Block"))
+        {
+            var block = col.gameObject;
+            BlockManager.Instance.DestroyBlock(block);
+        }
+
         if (!GameController.Instance.IsPaused)
         {
-            if (col.gameObject.CompareTag("Block"))
-            {
-                var block = col.gameObject;
-                BlockManager.Instance.DestroyBlock(block);
-            }
-
             if (col.gameObject.name == "Border Top" || col.gameObject.CompareTag("Block"))
             {
                 _directionY *= -1f;

@@ -24,7 +24,7 @@ public class GameController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
     void Start()
     {
@@ -50,6 +50,7 @@ public class GameController : MonoBehaviour
     public void GameFinished()
     {
         IsPaused = true;
+        _ballMovement.SetDefaultBallPosition();
         _ballMovement.StopBallMovement();
         WinCanvas.SetActive(true);
     }
