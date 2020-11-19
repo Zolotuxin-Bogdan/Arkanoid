@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5821468472067523276}
   - component: {fileID: 1944571676163102832}
   - component: {fileID: 9053293732376707380}
+  - component: {fileID: -7660878181250570633}
   m_Layer: 0
   m_Name: Red_Block
   m_TagString: Block
@@ -109,3 +110,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.15297046, y: 0.07296887}
   m_EdgeRadius: 0
+--- !u!114 &-7660878181250570633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5625297695599635872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833a5614156033249a60c579d481bac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Id: 0
