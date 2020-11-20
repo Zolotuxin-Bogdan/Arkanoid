@@ -1,14 +1,24 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ScenesController : MonoBehaviour
 {
+    public static bool GameLoaded = false;
+
     ////////////////////////////////////////////////
     //// Scene Loading
     ////////////////////////////////////////////////
     public void LoadNewGameScene()
     {
         SceneManager.LoadScene("Game Scene");
+    }
+
+    public void LoadGameSaveScene()
+    {
+        SceneManager.LoadScene("Game Scene");
+        GameLoaded = true;
+        
     }
 
     public void LoadMenuScene()

@@ -5,14 +5,14 @@ public class BallMovement : MonoBehaviour
     public float Speed = 7f;
     public GameObject BallSpawnLocation;
 
-    private float _directionY = 1f;
-    private float _directionX = 1f;
+    public float DirectionY { get; private set; } = 1f;
+    public float DirectionX { get; private set; } = 1f;
     private Rigidbody2D _rb;
+    private Vector2 _tempBallMovement;
 
-    void Start()
+    void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        SetDefaultBallMovement();
     }
 
     public void SetDefaultBallMovement()
@@ -20,14 +20,50 @@ public class BallMovement : MonoBehaviour
         _rb.velocity = (Vector2.up + Vector2.right) * Speed * 1f;
     }
 
+    public Vector2 GetBallMovement()
+    {
+        return _rb.velocity;
+    }
+
+    public Vector2 GetTempBallMovement()
+    {
+        return _tempBallMovement;
+    }
+
+    public void SetBallMovement(Vector2 ballMovement)
+    {
+        _rb.velocity = ballMovement;
+    }
+
     public void SetDefaultBallPosition()
     {
         transform.position = BallSpawnLocation.transform.position;
     }
 
+    public Vector3 GetBallPosition()
+    {
+        return transform.position;
+    }
+
+    public void SetBallPosition(Vector3 ballPosition)
+    {
+        transform.position = ballPosition;
+    }
+
     public void StopBallMovement()
     {
+        _tempBallMovement = GetBallMovement();
         _rb.velocity = new Vector2(0, 0);
+    }
+
+    public void Set_X_Direction(float value)
+    {
+        DirectionX = value;
+    }
+
+    public void Set_Y_Direction(float value)
+    {
+        DirectionY = value;
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -42,20 +78,20 @@ public class BallMovement : MonoBehaviour
         {
             if (col.gameObject.name == "Border Top" || col.gameObject.CompareTag("Block"))
             {
-                _directionY *= -1f;
-                _rb.velocity = new Vector2(_directionX * Speed, _directionY * Speed);
+                DirectionY *= -1f;
+                _rb.velocity = new Vector2(DirectionX * Speed, DirectionY * Speed);
             }
 
             if (col.gameObject.name == "Border Left" || col.gameObject.name == "Border Right")
             {
-                _directionX *= -1f;
-                _rb.velocity = new Vector2(_directionX * Speed, _directionY * Speed);
+                DirectionX *= -1f;
+                _rb.velocity = new Vector2(DirectionX * Speed, DirectionY * Speed);
             }
 
             if (col.gameObject.name == "Racket")
             {
-                _directionY *= -1f;
-                _rb.velocity = new Vector2(_directionX * Speed, _directionY * Speed);
+                DirectionY *= -1f;
+                _rb.velocity = new Vector2(DirectionX * Speed, DirectionY * Speed);
             }
         }
     }

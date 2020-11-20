@@ -8,7 +8,7 @@ public class RacketMovement : MonoBehaviour
     private readonly UserInput_Mouse _userInputMouse = new UserInput_Mouse();
     private Vector3 _oldMousePos;
 
-    void Start()
+    void Awake()
     {
         _keyboardMove = GetComponent<MoveByKeyboard>();
         _mouseMove = GetComponent<MoveByMouse>();
@@ -33,5 +33,15 @@ public class RacketMovement : MonoBehaviour
     bool IsMouseMoves(Vector3 oldPos, Vector3 newPos)
     {
         return oldPos != newPos;
+    }
+
+    public Vector3 GetRacketPosition()
+    {
+        return _keyboardMove.Racket.transform.position;
+    }
+
+    public void SetRacketPosition(Vector3 racketPosition)
+    {
+        _keyboardMove.Racket.transform.position = racketPosition;
     }
 }

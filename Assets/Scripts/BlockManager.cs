@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class BlockManager : MonoBehaviour
 {
     public static BlockManager Instance { get; private set; }
+    public Level CurrentLevel { get; private set; }
+    public Level CurrentLevelState { get; private set; } = new Level();
 
     public event Action GameFinishedEvent;
 
@@ -14,7 +17,6 @@ public class BlockManager : MonoBehaviour
     private readonly Level_Initializer _initializer = new Level_Initializer();
 
     private int _blockCount = 0;
-    private Level _currentLvl;
 
     void Awake()
     {
@@ -28,20 +30,29 @@ public class BlockManager : MonoBehaviour
         }
     }
 
-    void Start()
+    public void LoadLevel()
     {
-        GenerateLvl();
+        if (GameController.Instance.IsGameLoaded)
+        {
+            GenerateBlocks(CurrentLevelState);
+            GameController.Instance.IsGameLoaded = false;
+        }
+        else
+        {
+            GenerateLvl();
+        }
     }
 
     public void GenerateLvl()
     {
-        _currentLvl = _initializer.GetRandomLvl();
-        GenerateBlocks(_currentLvl);
+        CurrentLevel = _initializer.GetRandomLvl();
+        CurrentLevelState.BlocksList = new List<Block>(CurrentLevel.BlocksList);
+        GenerateBlocks(CurrentLevel);
     }
 
     public void RetryLvl()
     {
-        GenerateBlocks(_currentLvl);
+        GenerateBlocks(CurrentLevel);
     }
 
     public void DestroyBlock(GameObject receivedBlock)
@@ -50,11 +61,17 @@ public class BlockManager : MonoBehaviour
 
         Destroy(receivedBlock);
         _blockCount--;
-        var receivedBlockId = receivedBlock.GetComponent<BlockId>().Id;
         
-        var amount = _currentLvl.BlocksList
+        var receivedBlockId = receivedBlock.GetComponent<BlockId>().Id;
+
+        var blockForRemove = CurrentLevelState.BlocksList.FirstOrDefault(t => t.Id == receivedBlockId);
+        CurrentLevelState.BlocksList.Remove(blockForRemove);
+
+        var amount = CurrentLevel.BlocksList
             .Where(t => t.Id == receivedBlockId)
             .Select(t => t.BlockScoreCost).FirstOrDefault();
+        
+
         Score.AddAmountToScore(amount);
 
         if (_blockCount <= 0)
@@ -68,7 +85,7 @@ public class BlockManager : MonoBehaviour
         foreach (var block in level.BlocksList)
         {
             var newInstance = Instantiate(Block, new Vector3(block.XPosition, block.YPosition), new Quaternion(0, 0, 0, 0));
-            newInstance.GetComponent<BlockId>().Id = _blockCount;
+            newInstance.GetComponent<BlockId>().Id = block.Id;
             _blockCount++;
         }
     }
@@ -86,5 +103,15 @@ public class BlockManager : MonoBehaviour
         {
             GameFinishedEvent?.Invoke();
         }
+    }
+
+    public void SetCurrentLevel(Level level)
+    {
+        CurrentLevel = level;
+    }
+
+    public void SetCurrentLevelState(Level level)
+    {
+        CurrentLevelState = level;
     }
 }

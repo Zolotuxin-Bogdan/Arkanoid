@@ -14,6 +14,11 @@ public class UserInput_KeyBoard
 
     public bool Is_X_Pressed()
     {
-        return Input.GetKeyDown("x");
+        return Input.GetKeyDown(KeyCode.X);
+    }
+
+    public bool Is_Esc_Pressed()
+    {
+        return Input.GetKeyDown(KeyCode.Escape);
     }
 }

@@ -12,6 +12,8 @@ public class GameState
 
     public Vector3 BallPosition { get; set; }
     public Vector2 BallMovement { get; set; }
+    public float X_BallDirection { get; set; }
+    public float Y_BallDirection { get; set; }
 
     public Vector3 RacketPosition { get; set; }
 }
