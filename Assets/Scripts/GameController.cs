@@ -2,7 +2,7 @@
 
 public class GameController : MonoBehaviour
 {
-    public static GameController Instance = null;
+    public static GameController Instance { get; private set; }
 
     public GameObject WinCanvas;
     public GameObject LoseCanvas;
@@ -16,15 +16,14 @@ public class GameController : MonoBehaviour
     private BallMovement _ballMovement;
     void Awake()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
         {
             Instance = this;
         }
-        else if (Instance == this)
-        {
-            Destroy(gameObject);
-        }
-        DontDestroyOnLoad(gameObject);
     }
     void Start()
     {

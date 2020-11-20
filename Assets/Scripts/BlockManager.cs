@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class BlockManager : MonoBehaviour
 {
-    public static BlockManager Instance = null;
+    public static BlockManager Instance { get; private set; }
 
-    //public delegate void GameFinishedHandler();
     public event Action GameFinishedEvent;
 
     public GameObject Block;
@@ -19,15 +18,14 @@ public class BlockManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null)
-        { 
-            Instance = this; 
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
         }
-        else if (Instance == this)
-        { 
-            Destroy(gameObject); 
+        else
+        {
+            Instance = this;
         }
-        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
