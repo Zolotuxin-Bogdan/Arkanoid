@@ -4,20 +4,13 @@ public class MenuController : MonoBehaviour
 {
     public GameObject SettingsCanvas;
     public GameObject MenuCanvas;
-    public GameObject LoadGameButton;
+    public GameObject LoadGameCanvas;
 
     public StorageProvider StorageProvider;
 
     void Start()
     {
-        /*if (StorageProvider.LoadGameState() == default)
-        {
-            LoadGameButton.SetActive(false);
-        }
-        else
-        {
-            LoadGameButton.SetActive(true);
-        }*/
+
     }
     public void GoToSettingsFromMenu()
     {
@@ -28,6 +21,18 @@ public class MenuController : MonoBehaviour
     public void GoToMenuFromSettings()
     {
         SettingsCanvas.SetActive(false);
+        MenuCanvas.SetActive(true);
+    }
+
+    public void ShowLoadGameCanvas()
+    {
+        LoadGameCanvas.SetActive(true);
+        MenuCanvas.SetActive(false);
+    }
+
+    public void GoToMenuFromLoadGamesList()
+    {
+        LoadGameCanvas.SetActive(false);
         MenuCanvas.SetActive(true);
     }
 

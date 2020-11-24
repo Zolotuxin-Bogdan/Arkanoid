@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class ScenesController : MonoBehaviour
 {
     public static bool GameLoaded = false;
-
+    private readonly SessionStorage _sessionStorage = SessionStorage.Instance;
     ////////////////////////////////////////////////
     //// Scene Loading
     ////////////////////////////////////////////////
@@ -17,8 +17,7 @@ public class ScenesController : MonoBehaviour
     public void LoadGameSaveScene()
     {
         SceneManager.LoadScene("Game Scene");
-        GameLoaded = true;
-        
+        _sessionStorage.GameLoaded = true;
     }
 
     public void LoadMenuScene()

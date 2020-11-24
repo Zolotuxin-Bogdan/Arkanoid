@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,12 +14,12 @@ public class StorageProvider : MonoBehaviour
     private readonly Storage _storage = new Storage();
 
     private string _racketColorPath;
-    private string _gameStatePath;
+    private string _gameSavesPath;
 
     void Start()
     {
         _racketColorPath = Directory.GetCurrentDirectory() + "\\GameData" + "\\RacketColor.ark";
-        _gameStatePath = Directory.GetCurrentDirectory() + "\\GameData" + "\\GameSave.ark";
+        _gameSavesPath = Directory.GetCurrentDirectory() + "\\GameData" + "\\GameSaves.ark";
     }
 
     public void SaveRacketColor()
@@ -43,8 +45,15 @@ public class StorageProvider : MonoBehaviour
         return _storage.LoadData<RacketColor>(_racketColorPath);
     }
 
-    public void SaveGameState()
+    public void SaveGameCellsDict(int saveIndex)
     {
+        var saveCellsDict = new SaveCellsDict();
+        
+        if (LoadGameCellsDict() != default)
+        {
+            saveCellsDict = LoadGameCellsDict();
+        }
+
         var globalScore = Score.GetComponent<Score>().GlobalScore;
         var localScore = Score.GetComponent<Score>().LocalScore;
 
@@ -71,13 +80,23 @@ public class StorageProvider : MonoBehaviour
             LevelState = levelState
         };
 
-        _storage.SaveData(gameState, _gameStatePath);
+        var timeStamp = DateTime.Now;
+
+        var saveCell = new SaveCell()
+        {
+            GameState = gameState,
+            TimeStamp = timeStamp
+        };
+
+        saveCellsDict.SaveCells[saveIndex] = saveCell;
+
+        _storage.SaveData(saveCellsDict, _gameSavesPath);
     }
 
-    public GameState LoadGameState()
+    public SaveCellsDict LoadGameCellsDict()
     {
-        if (_storage.LoadData<GameState>(_gameStatePath) == default) return default;
+        if (_storage.LoadData<SaveCellsDict>(_gameSavesPath) == default) return default;
 
-        return _storage.LoadData<GameState>(_gameStatePath);
+        return _storage.LoadData<SaveCellsDict>(_gameSavesPath);
     }
 }

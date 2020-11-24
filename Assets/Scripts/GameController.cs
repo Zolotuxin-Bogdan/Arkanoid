@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour
     public GameObject WinCanvas;
     public GameObject LoseCanvas;
     public GameObject PauseCanvas;
+    public GameObject SaveGameCanvas;
     public GameObject Ball;
 
     public LoseGame LoseGame;
@@ -18,9 +19,8 @@ public class GameController : MonoBehaviour
     public bool IsGameLoaded;
 
     private readonly UserInput_KeyBoard _userInputKeyBoard = new UserInput_KeyBoard();
+    private readonly SessionStorage _sessionStorage = SessionStorage.Instance;
     private BallMovement _ballMovement;
-
-    private Vector2 _ballMovementVector;
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -31,18 +31,19 @@ public class GameController : MonoBehaviour
         {
             Instance = this;
         }
+
     }
     void Start()
     {
         IsPaused = false;
         _ballMovement = Ball.GetComponent<BallMovement>();
         BlockManager.Instance.GameFinishedEvent += GameFinished;
-        if (ScenesController.GameLoaded)
+        if (_sessionStorage.GameLoaded)
         {
-            LoadGame();
+            LoadGame(_sessionStorage.LoadCellIndex);
         }
         BlockManager.Instance.LoadLevel();
-        if (!ScenesController.GameLoaded)
+        if (!_sessionStorage.GameLoaded)
         {
             _ballMovement.SetDefaultBallMovement();
         }
@@ -55,14 +56,15 @@ public class GameController : MonoBehaviour
             GameLoosed();
         }
 
-        if (_userInputKeyBoard.Is_X_Pressed())
+        if (_userInputKeyBoard.IsKeyPressed(KeyCode.X))
         {
             BlockManager.Instance.DestroyAllBlocks();
         }
 
-        if (_userInputKeyBoard.Is_Esc_Pressed())
+        if (_userInputKeyBoard.IsKeyPressed(KeyCode.Escape))
         {
             GamePaused();
+            SaveGameCanvas.SetActive(false);
         }
     }
 
@@ -86,17 +88,35 @@ public class GameController : MonoBehaviour
     {
         if (!PauseCanvas.activeSelf)
         {
-            IsPaused = true;
-            _ballMovement.StopBallMovement();
-            PauseCanvas.SetActive(true);
+            StopGame();
         }
         else if (PauseCanvas.activeSelf)
         {
-            IsPaused = false;
-            _ballMovement.SetBallMovement(_ballMovement.GetTempBallMovement());
-            PauseCanvas.SetActive(false);
+            ResumeGame();
         }
         
+    }
+
+    void StopGame()
+    {
+        if (!IsPaused)
+        {
+            _ballMovement.StopBallMovement();
+        }
+        IsPaused = true;
+        PauseCanvas.SetActive(true);
+    }
+
+    void ResumeGame()
+    {
+        IsPaused = false;
+        _ballMovement.SetBallMovement(_ballMovement.GetTempBallMovement());
+        PauseCanvas.SetActive(false);
+    }
+    public void ShowGameSaveCanvas()
+    {
+        PauseCanvas.SetActive(false);
+        SaveGameCanvas.SetActive(true);
     }
     //////////////////////////////////////////////////////
 
@@ -109,9 +129,10 @@ public class GameController : MonoBehaviour
         _ballMovement.SetDefaultBallMovement();
     }
 
-    public void LoadGame()
+    public void LoadGame(int loadCellIndex)
     {
-        var gameState = StorageProvider.LoadGameState();
+        var gameCellsDict = StorageProvider.LoadGameCellsDict();
+        var gameState = gameCellsDict.SaveCells[loadCellIndex].GameState;
 
         Score.SetGlobalScore(gameState.GlobalScore);
         Score.SetLocalScore(gameState.LocalScore);
@@ -129,8 +150,8 @@ public class GameController : MonoBehaviour
         IsGameLoaded = true;
     }
 
-    public void SaveGame()
+    public void SaveGame(int saveCellIndex)
     {
-        StorageProvider.SaveGameState();
+        StorageProvider.SaveGameCellsDict(saveCellIndex);
     }
 }
