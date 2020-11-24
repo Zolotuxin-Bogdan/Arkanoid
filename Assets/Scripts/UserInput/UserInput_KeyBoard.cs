@@ -12,13 +12,8 @@ public class UserInput_KeyBoard
         return Input.GetAxisRaw("Vertical");
     }
 
-    public bool Is_X_Pressed()
+    public bool IsKeyPressed(KeyCode key)
     {
-        return Input.GetKeyDown(KeyCode.X);
-    }
-
-    public bool Is_Esc_Pressed()
-    {
-        return Input.GetKeyDown(KeyCode.Escape);
+        return Input.GetKeyDown(key);
     }
 }
