@@ -11,6 +11,7 @@ public class BlockManager : MonoBehaviour
 
     public event Action GameFinishedEvent;
 
+    public GameObject DestroyingParticles;
     public GameObject Block;
     public Score Score;
 
@@ -61,6 +62,10 @@ public class BlockManager : MonoBehaviour
 
         Destroy(receivedBlock);
         _blockCount--;
+
+        var particles = Instantiate(DestroyingParticles, receivedBlock.transform.position, receivedBlock.transform.rotation);
+        particles.GetComponent<ParticleSystem>().Play();
+        Destroy(particles, 1f);
         
         var receivedBlockId = receivedBlock.GetComponent<BlockId>().Id;
 
