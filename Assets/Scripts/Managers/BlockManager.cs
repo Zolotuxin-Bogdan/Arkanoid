@@ -63,6 +63,8 @@ public class BlockManager : MonoBehaviour
         Destroy(receivedBlock);
         _blockCount--;
 
+        AudioManager.Instance.PlayBlockDestroyedSound();
+
         var particles = Instantiate(DestroyingParticles, receivedBlock.transform.position, receivedBlock.transform.rotation);
         particles.GetComponent<ParticleSystem>().Play();
         Destroy(particles, 1f);

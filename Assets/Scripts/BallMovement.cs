@@ -80,18 +80,21 @@ public class BallMovement : MonoBehaviour
             {
                 DirectionY *= -1f;
                 _rb.velocity = new Vector2(DirectionX * Speed, DirectionY * Speed);
+                AudioManager.Instance.PlayBallBounceSound();
             }
 
             if (col.gameObject.name == "Border Left" || col.gameObject.name == "Border Right")
             {
                 DirectionX *= -1f;
                 _rb.velocity = new Vector2(DirectionX * Speed, DirectionY * Speed);
+                AudioManager.Instance.PlayBallBounceSound();
             }
 
             if (col.gameObject.name == "Racket")
             {
                 DirectionY *= -1f;
                 _rb.velocity = new Vector2(DirectionX * Speed, DirectionY * Speed);
+                AudioManager.Instance.PlayBallBounceSound();
             }
         }
     }
