@@ -10,10 +10,8 @@ public class GameState
     public int GlobalScore { get; set; }
     public int LocalScore { get; set; }
 
-    public Vector3 BallPosition { get; set; }
-    public Vector2 BallMovement { get; set; }
-    public float X_BallDirection { get; set; }
-    public float Y_BallDirection { get; set; }
+    public List<Ball> Balls { get; set; }
+    public int BallsCount { get; set; }
 
     public Vector3 RacketPosition { get; set; }
 }
