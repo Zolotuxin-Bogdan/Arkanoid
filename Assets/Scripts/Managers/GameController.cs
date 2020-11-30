@@ -10,17 +10,18 @@ public class GameController : MonoBehaviour
     public GameObject SaveGameCanvas;
     public GameObject Ball;
 
-    public LoseGame LoseGame;
     public StorageProvider StorageProvider;
     public Score Score;
     public RacketMovement RacketMovement;
 
     public bool IsPaused;
     public bool IsGameLoaded;
+    public bool IsLose;
 
     private readonly UserInput_KeyBoard _userInputKeyBoard = new UserInput_KeyBoard();
     private readonly SessionStorage _sessionStorage = SessionStorage.Instance;
     private BallMovement _ballMovement;
+    private GameObject _ball;
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -36,7 +37,6 @@ public class GameController : MonoBehaviour
     void Start()
     {
         IsPaused = false;
-        _ballMovement = Ball.GetComponent<BallMovement>();
         BlockManager.Instance.GameFinishedEvent += GameFinished;
         if (_sessionStorage.GameLoaded)
         {
@@ -45,14 +45,16 @@ public class GameController : MonoBehaviour
         BlockManager.Instance.LoadLevel();
         if (!_sessionStorage.GameLoaded)
         {
+            _ball = BallManager.Instance.SpawnStartBall(Ball);
+            _ballMovement = _ball.GetComponent<BallMovement>();
             _ballMovement.SetDefaultBallMovement();
         }
     }
     void Update()
     {
-        if (LoseGame.IsLose)
+        if (IsLose)
         {
-            LoseGame.IsLose = false;
+            IsLose = false;
             GameLoosed();
         }
 
@@ -72,15 +74,14 @@ public class GameController : MonoBehaviour
     public void GameFinished()
     {
         IsPaused = true;
-        _ballMovement.SetDefaultBallPosition();
-        _ballMovement.StopBallMovement();
+        BallManager.Instance.DestroyAllBalls();
         WinCanvas.SetActive(true);
     }
 
     void GameLoosed()
     {
         IsPaused = true;
-        _ballMovement.StopBallMovement();
+        BallManager.Instance.DestroyAllBalls();
         LoseCanvas.SetActive(true);
     }
 
@@ -101,7 +102,7 @@ public class GameController : MonoBehaviour
     {
         if (!IsPaused)
         {
-            _ballMovement.StopBallMovement();
+            BallManager.Instance.StopAllBalls();
         }
         IsPaused = true;
         PauseCanvas.SetActive(true);
@@ -110,7 +111,7 @@ public class GameController : MonoBehaviour
     void ResumeGame()
     {
         IsPaused = false;
-        _ballMovement.SetBallMovement(_ballMovement.GetTempBallMovement());
+        BallManager.Instance.RunAllBalls();
         PauseCanvas.SetActive(false);
     }
     public void ShowGameSaveCanvas()
@@ -125,7 +126,8 @@ public class GameController : MonoBehaviour
         IsPaused = false;
         WinCanvas.SetActive(false);
         LoseCanvas.SetActive(false);
-        _ballMovement.SetDefaultBallPosition();
+        _ball = BallManager.Instance.SpawnStartBall(Ball);
+        _ballMovement = _ball.GetComponent<BallMovement>();
         _ballMovement.SetDefaultBallMovement();
     }
 
@@ -137,10 +139,18 @@ public class GameController : MonoBehaviour
         Score.SetGlobalScore(gameState.GlobalScore);
         Score.SetLocalScore(gameState.LocalScore);
 
-        _ballMovement.SetBallPosition(gameState.BallPosition);
-        _ballMovement.SetBallMovement(gameState.BallMovement);
-        _ballMovement.Set_X_Direction(gameState.X_BallDirection);
-        _ballMovement.Set_Y_Direction(gameState.Y_BallDirection);
+        foreach (var ball in gameState.Balls)
+        {
+            var loadedBall = BallManager.Instance.SpawnBall(Ball);
+            var loadedBallMovement = loadedBall.GetComponent<BallMovement>();
+            loadedBallMovement.SetBallPosition(ball.BallPosition);
+            loadedBallMovement.SetBallMovement(ball.BallMovement);
+            loadedBallMovement.Set_X_Direction(ball.DirectionX);
+            loadedBallMovement.Set_Y_Direction(ball.DirectionY);
+            loadedBall.GetComponent<SpriteRenderer>().color = new Color(ball.BallColor.RedColor, ball.BallColor.GreenColor, ball.BallColor.BlueColor);
+        }
+
+        BallManager.Instance.BallCount = gameState.BallsCount;
 
         RacketMovement.SetRacketPosition(gameState.RacketPosition);
 

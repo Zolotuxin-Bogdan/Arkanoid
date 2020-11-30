@@ -8,7 +8,6 @@ public class StorageProvider : MonoBehaviour
 {
     public GameObject RacketColor;
     public GameObject Score;
-    public GameObject BallMovement;
     public GameObject RacketMovement;
 
     private readonly Storage _storage = new Storage();
@@ -25,7 +24,7 @@ public class StorageProvider : MonoBehaviour
     public void SaveRacketColor()
     {
         var racketColor = RacketColor.GetComponent<Image>().color;
-        var racketSaveColor = new RacketColor
+        var racketSaveColor = new CustomColor
         {
             RedColor = racketColor.r,
             GreenColor = racketColor.g,
@@ -37,12 +36,12 @@ public class StorageProvider : MonoBehaviour
 
     public Color LoadRacketColor()
     {
-        if (_storage.LoadData<RacketColor>(_racketColorPath) == default)
+        if (_storage.LoadData<CustomColor>(_racketColorPath) == default)
         { 
             return new Color(255, 255, 255);
         }
 
-        return _storage.LoadData<RacketColor>(_racketColorPath);
+        return _storage.LoadData<CustomColor>(_racketColorPath);
     }
 
     public void SaveGameCellsDict(int saveIndex)
@@ -57,10 +56,23 @@ public class StorageProvider : MonoBehaviour
         var globalScore = Score.GetComponent<Score>().GlobalScore;
         var localScore = Score.GetComponent<Score>().LocalScore;
 
-        var ballPosition = BallMovement.GetComponent<BallMovement>().GetBallPosition();
-        var ballMovement = BallMovement.GetComponent<BallMovement>().GetTempBallMovement();
-        var xBallDirection = BallMovement.GetComponent<BallMovement>().DirectionX;
-        var yBallDirection = BallMovement.GetComponent<BallMovement>().DirectionY;
+        var ballsList = new List<Ball>();
+        var balls = GameObject.FindGameObjectsWithTag("Ball");
+        foreach (var ball in balls)
+        {
+            var ballObject = new Ball
+            {
+                BallPosition = ball.GetComponent<BallMovement>().GetBallPosition(),
+                BallMovement = ball.GetComponent<BallMovement>().GetTempBallMovement(),
+                DirectionX = ball.GetComponent<BallMovement>().DirectionX,
+                DirectionY = ball.GetComponent<BallMovement>().DirectionY,
+                BallColor = ball.GetComponent<SpriteRenderer>().color
+            };
+            ballsList.Add(ballObject);
+        }
+
+        var ballsCount = balls.Length;
+        
 
         var racketPosition = RacketMovement.GetComponent<RacketMovement>().GetRacketPosition();
 
@@ -71,10 +83,8 @@ public class StorageProvider : MonoBehaviour
         {
             GlobalScore = globalScore,
             LocalScore = localScore,
-            BallPosition = ballPosition,
-            BallMovement = ballMovement,
-            X_BallDirection = xBallDirection,
-            Y_BallDirection = yBallDirection,
+            Balls = ballsList,
+            BallsCount = ballsCount,
             RacketPosition = racketPosition,
             Level = level,
             LevelState = levelState

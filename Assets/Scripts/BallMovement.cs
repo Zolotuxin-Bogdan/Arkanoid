@@ -66,12 +66,37 @@ public class BallMovement : MonoBehaviour
         DirectionY = value;
     }
 
+    public Vector2 GetInvertedMovement()
+    {
+        return new Vector2(-1f * DirectionX * Speed, -1f * DirectionY * Speed);
+    }
+
+    public float GetInvertedDirectionX()
+    {
+        return DirectionX * -1f;
+    }
+
+    public float GetInvertedDirectionY()
+    {
+        return DirectionY * -1f;
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
+        if (col.gameObject.tag == "Ball")
+        {
+            Physics2D.IgnoreCollision(col.gameObject.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
+            //DirectionY *= -1f;
+            //col.gameObject.GetComponent<BallMovement>().DirectionY *= -1f;
+        }
+
         if (col.gameObject.CompareTag("Block"))
         {
+            var ball = gameObject;
+            BallManager.Instance.SetCurrentBall(ball);
             var block = col.gameObject;
             BlockManager.Instance.DestroyBlock(block);
+            
         }
 
         if (!GameController.Instance.IsPaused)
