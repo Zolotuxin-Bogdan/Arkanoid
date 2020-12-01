@@ -12,10 +12,9 @@ public class SaveLoadUI : MonoBehaviour
     public Button CellTwoButton;
     public Button CellThreeButton;
 
-    public StorageProvider StorageProvider;
-
     private List<Text> _dateTimeTextsList = new List<Text>();
     private List<Button> _buttonsList = new List<Button>();
+    private StorageProvider _storageProvider = new StorageProvider();
     void Awake()
     {
         _dateTimeTextsList.Add(CellOneDateTimeText);
@@ -29,7 +28,7 @@ public class SaveLoadUI : MonoBehaviour
 
     public void LoadDateTimeToUI()
     {
-        if (StorageProvider.LoadGameCellsDict() == null)
+        if (_storageProvider.LoadGameCellsDict() == null)
         {
             foreach (var button in _buttonsList)
             {
@@ -45,7 +44,7 @@ public class SaveLoadUI : MonoBehaviour
             }
             return;
         }
-        var gameCellsDict = StorageProvider.LoadGameCellsDict();
+        var gameCellsDict = _storageProvider.LoadGameCellsDict();
         for (var i = 0; i < _dateTimeTextsList.Count; i++)
         {
             if (gameCellsDict.SaveCells.ContainsKey(i))
