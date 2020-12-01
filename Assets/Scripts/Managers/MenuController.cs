@@ -8,10 +8,6 @@ public class MenuController : MonoBehaviour
 
     public StorageProvider StorageProvider;
 
-    void Start()
-    {
-
-    }
     public void GoToSettingsFromMenu()
     {
         SettingsCanvas.SetActive(true);

@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class ScenesController : MonoBehaviour
 {
-    public static bool GameLoaded = false;
     private readonly SessionStorage _sessionStorage = SessionStorage.Instance;
     ////////////////////////////////////////////////
     //// Scene Loading
