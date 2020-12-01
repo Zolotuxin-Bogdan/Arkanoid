@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Random = System.Random;
+﻿using Random = System.Random;
 
 public class DoubleBallBonusCommand : IBonus
 {

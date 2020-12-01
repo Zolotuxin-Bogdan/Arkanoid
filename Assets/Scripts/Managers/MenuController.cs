@@ -6,8 +6,6 @@ public class MenuController : MonoBehaviour
     public GameObject MenuCanvas;
     public GameObject LoadGameCanvas;
 
-    public StorageProvider StorageProvider;
-
     public void GoToSettingsFromMenu()
     {
         SettingsCanvas.SetActive(true);
@@ -31,8 +29,4 @@ public class MenuController : MonoBehaviour
         LoadGameCanvas.SetActive(false);
         MenuCanvas.SetActive(true);
     }
-
-
-
-
 }

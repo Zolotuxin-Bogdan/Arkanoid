@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-public class Block
+﻿public class Block
 {
     public int Id { get; set; }
     public float XPosition { get; set; }
