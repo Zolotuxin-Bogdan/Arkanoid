@@ -29,7 +29,7 @@ public class SaveLoadUI : MonoBehaviour
 
     public void LoadDateTimeToUI()
     {
-        if (StorageProvider.LoadGameCellsDict() == default)
+        if (StorageProvider.LoadGameCellsDict() == null)
         {
             foreach (var button in _buttonsList)
             {

@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class StorageProvider : MonoBehaviour
+public class StorageProvider
 {
-    public GameObject RacketColor;
-    public GameObject Score;
-    public GameObject RacketMovement;
-
     private readonly Storage _storage = new Storage();
 
     private string _racketColorPath;
@@ -21,92 +15,53 @@ public class StorageProvider : MonoBehaviour
         _gameSavesPath = Directory.GetCurrentDirectory() + "\\GameData" + "\\GameSaves.ark";
     }
 
-    public void SaveRacketColor()
+    public void SaveRacketColor(CustomColor racketSaveColor)
     {
-        var racketColor = RacketColor.GetComponent<Image>().color;
-        var racketSaveColor = new CustomColor
-        {
-            RedColor = racketColor.r,
-            GreenColor = racketColor.g,
-            BlueColor = racketColor.b
-        };
-
         _storage.SaveData(racketSaveColor, _racketColorPath);
     }
 
     public Color LoadRacketColor()
     {
-        if (_storage.LoadData<CustomColor>(_racketColorPath) == default)
-        { 
-            return new Color(255, 255, 255);
-        }
-
-        return _storage.LoadData<CustomColor>(_racketColorPath);
+        TryLoadRacketColor(out var loadColor);
+        return loadColor;
     }
 
-    public void SaveGameCellsDict(int saveIndex)
+    public bool TryLoadRacketColor(out Color result)
     {
-        var saveCellsDict = new SaveCellsDict();
-        
-        if (LoadGameCellsDict() != default)
+        try
         {
-            saveCellsDict = LoadGameCellsDict();
+            result = _storage.LoadData<CustomColor>(_racketColorPath);
+            return true;
         }
-
-        var globalScore = Score.GetComponent<Score>().GlobalScore;
-        var localScore = Score.GetComponent<Score>().LocalScore;
-
-        var ballsList = new List<Ball>();
-        var balls = GameObject.FindGameObjectsWithTag("Ball");
-        foreach (var ball in balls)
+        catch (Exception)
         {
-            var ballObject = new Ball
-            {
-                BallPosition = ball.GetComponent<BallMovement>().GetBallPosition(),
-                BallMovement = ball.GetComponent<BallMovement>().GetTempBallMovement(),
-                DirectionX = ball.GetComponent<BallMovement>().DirectionX,
-                DirectionY = ball.GetComponent<BallMovement>().DirectionY,
-                BallColor = ball.GetComponent<SpriteRenderer>().color
-            };
-            ballsList.Add(ballObject);
+            result = new Color(255, 255, 255);
+            return false;
         }
+    }
 
-        var ballsCount = balls.Length;
-        
-
-        var racketPosition = RacketMovement.GetComponent<RacketMovement>().GetRacketPosition();
-
-        var level = BlockManager.Instance.CurrentLevel;
-        var levelState = BlockManager.Instance.CurrentLevelState;
-
-        var gameState = new GameState()
-        {
-            GlobalScore = globalScore,
-            LocalScore = localScore,
-            Balls = ballsList,
-            BallsCount = ballsCount,
-            RacketPosition = racketPosition,
-            Level = level,
-            LevelState = levelState
-        };
-
-        var timeStamp = DateTime.Now;
-
-        var saveCell = new SaveCell()
-        {
-            GameState = gameState,
-            TimeStamp = timeStamp
-        };
-
-        saveCellsDict.SaveCells[saveIndex] = saveCell;
-
+    public void SaveGameCellsDict(SaveCellsDict saveCellsDict)
+    {
         _storage.SaveData(saveCellsDict, _gameSavesPath);
     }
 
     public SaveCellsDict LoadGameCellsDict()
     {
-        if (_storage.LoadData<SaveCellsDict>(_gameSavesPath) == default) return default;
+        TryLoadGameCellsDict(out var saveCellsDict);
+        return saveCellsDict;
+    }
 
-        return _storage.LoadData<SaveCellsDict>(_gameSavesPath);
+    public bool TryLoadGameCellsDict(out SaveCellsDict result)
+    {
+        try
+        {
+            result = _storage.LoadData<SaveCellsDict>(_gameSavesPath);
+            return true;
+        }
+        catch (Exception)
+        {
+            result = null;
+            return false;
+        }
     }
 }

@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     public GameObject SaveGameCanvas;
     public GameObject Ball;
 
-    public StorageProvider StorageProvider;
+    public GameSaveManager GameSaveManager;
     public Score Score;
     public RacketMovement RacketMovement;
 
@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour
 
     private readonly UserInput_KeyBoard _userInputKeyBoard = new UserInput_KeyBoard();
     private readonly SessionStorage _sessionStorage = SessionStorage.Instance;
+    private readonly StorageProvider _storageProvider = new StorageProvider();
     private BallMovement _ballMovement;
     private GameObject _ball;
     void Awake()
@@ -133,7 +134,9 @@ public class GameController : MonoBehaviour
 
     public void LoadGame(int loadCellIndex)
     {
-        var gameCellsDict = StorageProvider.LoadGameCellsDict();
+        var gameCellsDict = _storageProvider.LoadGameCellsDict();
+        if(gameCellsDict == null) return;
+
         var gameState = gameCellsDict.SaveCells[loadCellIndex].GameState;
 
         Score.SetGlobalScore(gameState.GlobalScore);
@@ -162,6 +165,6 @@ public class GameController : MonoBehaviour
 
     public void SaveGame(int saveCellIndex)
     {
-        StorageProvider.SaveGameCellsDict(saveCellIndex);
+        GameSaveManager.SaveGameCellsDict(saveCellIndex);
     }
 }

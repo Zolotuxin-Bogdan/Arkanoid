@@ -3179,7 +3179,6 @@ MonoBehaviour:
   SettingsCanvas: {fileID: 460414029}
   MenuCanvas: {fileID: 598839919}
   LoadGameCanvas: {fileID: 2046604968}
-  StorageProvider: {fileID: 1439268945}
 --- !u!1 &1437501435
 GameObject:
   m_ObjectHideFlags: 0
@@ -3270,7 +3269,7 @@ GameObject:
   - component: {fileID: 1439268946}
   - component: {fileID: 1439268945}
   m_Layer: 0
-  m_Name: StorageProvider
+  m_Name: GameSaveManager
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -3285,12 +3284,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1439268944}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76ba1ab31133f074f89cbca12e31bad5, type: 3}
+  m_Script: {fileID: 11500000, guid: 6228ea7778764134ca76ea32ab6aca6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   RacketColor: {fileID: 1270821735}
   Score: {fileID: 0}
-  BallMovement: {fileID: 0}
   RacketMovement: {fileID: 0}
 --- !u!4 &1439268946
 Transform:
@@ -4559,7 +4557,6 @@ MonoBehaviour:
   CellOneButton: {fileID: 1340037516}
   CellTwoButton: {fileID: 1235581124}
   CellThreeButton: {fileID: 1381865891}
-  StorageProvider: {fileID: 1439268945}
 --- !u!1 &2054532136
 GameObject:
   m_ObjectHideFlags: 0
