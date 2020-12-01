@@ -6,8 +6,7 @@ public class LoseGame : MonoBehaviour
     {
         if (col.gameObject.tag == "Ball")
         {
-            Destroy(col.gameObject);
-            BallManager.Instance.DecreaseBallCount();
+            BallManager.Instance.DestroyBall(col.gameObject);
         }
     }
 }

@@ -46,7 +46,7 @@ public class GameController : MonoBehaviour
         BlockManager.Instance.LoadLevel();
         if (!_sessionStorage.GameLoaded)
         {
-            _ball = BallManager.Instance.SpawnStartBall(Ball);
+            _ball = BallManager.Instance.SpawnBall(Ball);
             _ballMovement = _ball.GetComponent<BallMovement>();
             _ballMovement.SetDefaultBallMovement();
         }
@@ -68,6 +68,11 @@ public class GameController : MonoBehaviour
         {
             GamePaused();
             SaveGameCanvas.SetActive(false);
+        }
+
+        if (_userInputKeyBoard.IsKeyPressed(KeyCode.Space))
+        {
+            BallManager.Instance.SlowMoBalls();
         }
     }
 
@@ -127,7 +132,7 @@ public class GameController : MonoBehaviour
         IsPaused = false;
         WinCanvas.SetActive(false);
         LoseCanvas.SetActive(false);
-        _ball = BallManager.Instance.SpawnStartBall(Ball);
+        _ball = BallManager.Instance.SpawnBall(Ball);
         _ballMovement = _ball.GetComponent<BallMovement>();
         _ballMovement.SetDefaultBallMovement();
     }
@@ -152,8 +157,6 @@ public class GameController : MonoBehaviour
             loadedBallMovement.Set_Y_Direction(ball.DirectionY);
             loadedBall.GetComponent<SpriteRenderer>().color = new Color(ball.BallColor.RedColor, ball.BallColor.GreenColor, ball.BallColor.BlueColor);
         }
-
-        BallManager.Instance.BallCount = gameState.BallsCount;
 
         RacketMovement.SetRacketPosition(gameState.RacketPosition);
 

@@ -13,11 +13,12 @@ public class BallMovement : MonoBehaviour
     void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _rb.AddRelativeForce(new Vector3(Speed, 0, 0), ForceMode2D.Force);
     }
 
     public void SetDefaultBallMovement()
     {
-        _rb.velocity = (Vector2.up + Vector2.right) * Speed * 1f;
+        _rb.velocity = new Vector2(DirectionX * Speed, DirectionY * Speed);
     }
 
     public Vector2 GetBallMovement()
@@ -33,11 +34,6 @@ public class BallMovement : MonoBehaviour
     public void SetBallMovement(Vector2 ballMovement)
     {
         _rb.velocity = ballMovement;
-    }
-
-    public void SetDefaultBallPosition()
-    {
-        transform.position = BallSpawnLocation.transform.position;
     }
 
     public Vector3 GetBallPosition()
@@ -68,7 +64,7 @@ public class BallMovement : MonoBehaviour
 
     public Vector2 GetInvertedMovement()
     {
-        return new Vector2(-1f * DirectionX * Speed, -1f * DirectionY * Speed);
+        return new Vector2(-1f * _rb.velocity.x, -1f * _rb.velocity.y);
     }
 
     public float GetInvertedDirectionX()
@@ -104,21 +100,21 @@ public class BallMovement : MonoBehaviour
             if (col.gameObject.name == "Border Top" || col.gameObject.CompareTag("Block"))
             {
                 DirectionY *= -1f;
-                _rb.velocity = new Vector2(DirectionX * Speed, DirectionY * Speed);
+                _rb.velocity = new Vector2(_rb.velocity.x * DirectionX, _rb.velocity.y * DirectionY);
                 AudioManager.Instance.PlayBallBounceSound();
             }
 
             if (col.gameObject.name == "Border Left" || col.gameObject.name == "Border Right")
             {
                 DirectionX *= -1f;
-                _rb.velocity = new Vector2(DirectionX * Speed, DirectionY * Speed);
+                _rb.velocity = new Vector2(_rb.velocity.x * DirectionX, _rb.velocity.y * DirectionY);
                 AudioManager.Instance.PlayBallBounceSound();
             }
 
             if (col.gameObject.name == "Racket")
             {
                 DirectionY *= -1f;
-                _rb.velocity = new Vector2(DirectionX * Speed, DirectionY * Speed);
+                _rb.velocity = new Vector2(_rb.velocity.x * DirectionX, _rb.velocity.y * DirectionY);
                 AudioManager.Instance.PlayBallBounceSound();
             }
         }

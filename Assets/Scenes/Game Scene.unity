@@ -534,7 +534,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ball: {fileID: 2557810172652881964, guid: a85cee2b7f6017943882f513afbd8767, type: 3}
-  BallCount: 1
 --- !u!4 &120668375
 Transform:
   m_ObjectHideFlags: 0

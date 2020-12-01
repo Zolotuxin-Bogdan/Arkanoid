@@ -1,13 +1,17 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class BallManager : MonoBehaviour
 {
     public static BallManager Instance { get; private set; }
 
+    public float SlowMoBallTime { get; set; } = 3f;
+    public float SlowMoMultiplier { get; set; } = 4f;
 
     public GameObject Ball;
 
-    public int BallCount;
+    private List<GameObject> _balls = new List<GameObject>();
 
     void Awake()
     {
@@ -21,29 +25,27 @@ public class BallManager : MonoBehaviour
         }
     }
 
-    public void DecreaseBallCount()
-    {
-        BallCount--;
-        if (BallCount <= 0)
-        {
-            GameController.Instance.IsLose = true;
-        }
-    }
 
     public void SetCurrentBall(GameObject ball)
     {
         Ball = ball;
     }
 
-    public GameObject SpawnStartBall(GameObject ball)
-    {
-        BallCount = 1;
-        return Instantiate(ball);
-    }
-
     public GameObject SpawnBall(GameObject ball)
     {
-        return Instantiate(ball);
+        var createdBall = Instantiate(ball);
+        _balls.Add(createdBall);
+        return createdBall;
+    }
+
+    public void DestroyBall(GameObject ball)
+    {
+        Destroy(ball);
+        _balls.Remove(ball);
+        if (_balls.Count <= 0)
+        {
+            GameController.Instance.IsLose = true;
+        }
     }
 
     public void DestroyAllBalls()
@@ -80,11 +82,29 @@ public class BallManager : MonoBehaviour
         var directionX = Ball.GetComponent<BallMovement>().GetInvertedDirectionX();
         var directionY = Ball.GetComponent<BallMovement>().GetInvertedDirectionY();
         var newBall = Instantiate(Ball, ballPosition, Ball.transform.rotation);
-        BallCount++;
         newBall.GetComponent<BallMovement>().SetBallMovement(ballMovement);
         newBall.GetComponent<BallMovement>().SetBallPosition(ballPosition);
         newBall.GetComponent<BallMovement>().Set_X_Direction(directionX);
         newBall.GetComponent<BallMovement>().Set_Y_Direction(directionY);
         newBall.GetComponent<SpriteRenderer>().color = new Color(0f, 255f, 0f);
+    }
+
+    public void SlowMoBalls()
+    {
+        StartCoroutine(SlowMoBallsCoroutine());
+    }
+    private IEnumerator SlowMoBallsCoroutine()
+    {
+        foreach (var ball in _balls)
+        {
+            var ballVelocity = ball.GetComponent<Rigidbody2D>().velocity;
+            ball.GetComponent<Rigidbody2D>().velocity = new Vector2(ballVelocity.x / SlowMoMultiplier, ballVelocity.y / SlowMoMultiplier);
+        }
+        yield return new WaitForSeconds(SlowMoBallTime);
+        foreach (var ball in _balls)
+        {
+            var ballVelocity = ball.GetComponent<Rigidbody2D>().velocity;
+            ball.GetComponent<Rigidbody2D>().velocity = new Vector2(ballVelocity.x * SlowMoMultiplier, ballVelocity.y * SlowMoMultiplier);
+        }
     }
 }
