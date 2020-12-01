@@ -13,7 +13,6 @@ public class BallMovement : MonoBehaviour
     void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _rb.AddRelativeForce(new Vector3(Speed, 0, 0), ForceMode2D.Force);
     }
 
     public void SetDefaultBallMovement()
