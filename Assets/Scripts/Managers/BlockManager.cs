@@ -16,7 +16,7 @@ public class BlockManager : MonoBehaviour
     public Score Score;
 
     private readonly Level_Initializer _initializer = new Level_Initializer();
-    private IBonus _doubleBallBonus = new DoubleBallBonusCommand();
+    private readonly IBonus _doubleBallBonus = BonusFactory.GetDoubleBallBonusCommand();
 
     private int _blockCount = 0;
 
@@ -70,10 +70,7 @@ public class BlockManager : MonoBehaviour
         particles.GetComponent<ParticleSystem>().Play();
         Destroy(particles, 1f);
         
-        BonusManager.Instance.SetBonusCommand(_doubleBallBonus);
-        BonusManager.Instance.ApplyBonusEffect();
-        //BonusManager.Instance.TryGetDoubleBall();
-
+        _doubleBallBonus.Execute();
 
         var receivedBlockId = receivedBlock.GetComponent<BlockId>().Id;
 
