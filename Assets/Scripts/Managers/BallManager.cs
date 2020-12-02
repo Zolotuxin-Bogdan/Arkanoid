@@ -9,6 +9,8 @@ public class BallManager : MonoBehaviour
     public float SlowMoBallTime { get; set; } = 3f;
     public float SlowMoMultiplier { get; set; } = 4f;
 
+    public float BallSpeed { get; set; } = 7f;
+
     public GameObject Ball;
 
     private List<GameObject> _balls = new List<GameObject>();
@@ -55,6 +57,7 @@ public class BallManager : MonoBehaviour
         {
             Destroy(ball);
         }
+        _balls.Clear();
     }
 
     public void StopAllBalls()
@@ -82,6 +85,7 @@ public class BallManager : MonoBehaviour
         var directionX = Ball.GetComponent<BallMovement>().GetInvertedDirectionX();
         var directionY = Ball.GetComponent<BallMovement>().GetInvertedDirectionY();
         var newBall = Instantiate(Ball, ballPosition, Ball.transform.rotation);
+        _balls.Add(newBall);
         newBall.GetComponent<BallMovement>().SetBallMovement(ballMovement);
         newBall.GetComponent<BallMovement>().SetBallPosition(ballPosition);
         newBall.GetComponent<BallMovement>().Set_X_Direction(directionX);
@@ -95,16 +99,23 @@ public class BallManager : MonoBehaviour
     }
     private IEnumerator SlowMoBallsCoroutine()
     {
+        BallSpeed /= SlowMoMultiplier;
         foreach (var ball in _balls)
         {
-            var ballVelocity = ball.GetComponent<Rigidbody2D>().velocity;
-            ball.GetComponent<Rigidbody2D>().velocity = new Vector2(ballVelocity.x / SlowMoMultiplier, ballVelocity.y / SlowMoMultiplier);
+            ball.GetComponent<BallMovement>().Speed = BallSpeed;
+            var directionX = ball.GetComponent<BallMovement>().DirectionX;
+            var directionY = ball.GetComponent<BallMovement>().DirectionY;
+            ball.GetComponent<Rigidbody2D>().velocity = new Vector2(directionX * BallSpeed, directionY * BallSpeed);
+            
         }
         yield return new WaitForSeconds(SlowMoBallTime);
+        BallSpeed *= SlowMoMultiplier;
         foreach (var ball in _balls)
         {
-            var ballVelocity = ball.GetComponent<Rigidbody2D>().velocity;
-            ball.GetComponent<Rigidbody2D>().velocity = new Vector2(ballVelocity.x * SlowMoMultiplier, ballVelocity.y * SlowMoMultiplier);
+            ball.GetComponent<BallMovement>().Speed = BallSpeed;
+            var directionX = ball.GetComponent<BallMovement>().DirectionX;
+            var directionY = ball.GetComponent<BallMovement>().DirectionY;
+            ball.GetComponent<Rigidbody2D>().velocity = new Vector2(directionX * BallSpeed, directionY * BallSpeed);
         }
     }
 }

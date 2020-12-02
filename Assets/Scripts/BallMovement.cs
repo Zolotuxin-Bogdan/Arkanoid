@@ -3,7 +3,6 @@
 public class BallMovement : MonoBehaviour
 {
     public float Speed = 7f;
-    public GameObject BallSpawnLocation;
 
     public float DirectionY { get; private set; } = 1f;
     public float DirectionX { get; private set; } = 1f;
@@ -63,7 +62,7 @@ public class BallMovement : MonoBehaviour
 
     public Vector2 GetInvertedMovement()
     {
-        return new Vector2(-1f * _rb.velocity.x, -1f * _rb.velocity.y);
+        return new Vector2(-1f * Speed * DirectionX, -1f * Speed * DirectionY);
     }
 
     public float GetInvertedDirectionX()
@@ -99,21 +98,21 @@ public class BallMovement : MonoBehaviour
             if (col.gameObject.name == "Border Top" || col.gameObject.CompareTag("Block"))
             {
                 DirectionY *= -1f;
-                _rb.velocity = new Vector2(_rb.velocity.x * DirectionX, _rb.velocity.y * DirectionY);
+                _rb.velocity = new Vector2(Speed * DirectionX, Speed * DirectionY);
                 AudioManager.Instance.PlayBallBounceSound();
             }
 
             if (col.gameObject.name == "Border Left" || col.gameObject.name == "Border Right")
             {
                 DirectionX *= -1f;
-                _rb.velocity = new Vector2(_rb.velocity.x * DirectionX, _rb.velocity.y * DirectionY);
+                _rb.velocity = new Vector2(Speed * DirectionX, Speed * DirectionY);
                 AudioManager.Instance.PlayBallBounceSound();
             }
 
             if (col.gameObject.name == "Racket")
             {
                 DirectionY *= -1f;
-                _rb.velocity = new Vector2(_rb.velocity.x * DirectionX, _rb.velocity.y * DirectionY);
+                _rb.velocity = new Vector2(Speed * DirectionX, Speed * DirectionY);
                 AudioManager.Instance.PlayBallBounceSound();
             }
         }
