@@ -26,7 +26,7 @@ public class Storage
     {
         if (!File.Exists(path))
         {
-            return default;
+            throw new FileNotFoundException();
         }
         using (var sr = new StreamReader(path))
         {

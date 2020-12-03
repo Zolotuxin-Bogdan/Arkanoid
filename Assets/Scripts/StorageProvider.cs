@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using UnityEngine;
 
 public class StorageProvider
@@ -33,7 +32,7 @@ public class StorageProvider
             result = _storage.LoadData<CustomColor>(_racketColorPath);
             return true;
         }
-        catch (Exception)
+        catch (FileNotFoundException)
         {
             result = new Color(255, 255, 255);
             return false;
@@ -58,7 +57,7 @@ public class StorageProvider
             result = _storage.LoadData<SaveCellsDict>(_gameSavesPath);
             return true;
         }
-        catch (Exception)
+        catch (FileNotFoundException)
         {
             result = null;
             return false;

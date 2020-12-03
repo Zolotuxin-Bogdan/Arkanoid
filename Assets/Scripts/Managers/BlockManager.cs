@@ -17,6 +17,7 @@ public class BlockManager : MonoBehaviour
 
     private readonly Level_Initializer _initializer = new Level_Initializer();
     private readonly IBonus _doubleBallBonus = BonusFactory.GetDoubleBallBonusCommand();
+    private readonly IBonus _slowMoBallBonus = BonusFactory.GetSlowMoBonusCommand();
 
     private int _blockCount = 0;
 
@@ -71,6 +72,7 @@ public class BlockManager : MonoBehaviour
         Destroy(particles, 1f);
         
         _doubleBallBonus.Execute();
+        _slowMoBallBonus.Execute();
 
         var receivedBlockId = receivedBlock.GetComponent<BlockId>().Id;
 
